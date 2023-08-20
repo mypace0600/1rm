@@ -1,0 +1,26 @@
+.topNav{
+    width: 100%;
+    padding:0% 5%;
+    margin: 2.5% 0%;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topNavMenus{
+    width:80%;
+    display:flex;
+    align-items: center;
+}
+
+.topNavMenus a{
+    margin-right: 2%;
+    font-size: 20px;
+}
+
+.topNavButtons{
+    width:20%;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}

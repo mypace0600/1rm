@@ -1,0 +1,30 @@
+.main{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.main-content{
+    width:80%;
+    margin-bottom: 15px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.table-meta-title{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.table-meta-paging{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-box-title{
+    font-size: 30px;
+    font-weight: bold;
+}
