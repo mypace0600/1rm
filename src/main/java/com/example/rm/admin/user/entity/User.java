@@ -1,26 +1,25 @@
 package com.example.rm.admin.user.entity;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
-@Entity(name="user")
+@Entity
 @Data
 @ToString
+@Table(name="t_user")
+@NoArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
 
     private String loginId;
 
-    private String password;
+    private String loginPw;
 
     private String userName;
 
@@ -32,15 +31,43 @@ public class User {
 
     private int age;
 
-    @Builder
-    public User(String userId, String loginId, String password,String userName, String email, String phone, String gender, int age){
+    private LocalDateTime registeredData;
+
+    private String registeredId;
+
+    private LocalDateTime editedData;
+
+    private String editedId;
+
+    public User(String userId,String loginId,String loginPw,String userName,String email, String phone, String gender, int age, LocalDateTime registeredData, String registeredId, LocalDateTime editedData, String editedId){
         this.userId = userId;
         this.loginId = loginId;
-        this.password = password;
+        this.loginPw = loginPw;
         this.userName = userName;
         this.email = email;
         this.phone = phone;
         this.gender = gender;
         this.age = age;
+        this.registeredData = registeredData;
+        this.registeredId = registeredId;
+        this.editedData = editedData;
+        this.editedId = editedId;
     }
+
+   /* public static User sample(){
+        return new User(
+                "ID0001",
+                "test",
+                "123",
+                "test",
+                "test@test.com",
+                "123",
+                "male",
+                29,
+                LocalDateTime.now(),
+                "test",
+                LocalDateTime.now(),
+                "test"
+        );
+    }*/
 }
