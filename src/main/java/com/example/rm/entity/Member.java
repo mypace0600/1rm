@@ -17,7 +17,7 @@ public class Member {
 
     @Id //Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 프로젝트에서 연결된 DB 넘버링 전략을 따라간다.
-    private int id; // 시퀀스, auto-increment
+    private Long id; // 시퀀스, auto-increment
 
     @Column(nullable = false, length = 100, unique = true)
     private String loginId; // 아이디

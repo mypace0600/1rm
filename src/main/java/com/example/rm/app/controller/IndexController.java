@@ -1,14 +1,13 @@
 package com.example.rm.app.controller;
 
 import com.example.rm.entity.Machine;
+import com.example.rm.entity.Record;
 import com.example.rm.machine.service.MachineService;
+import com.example.rm.record.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,14 +16,27 @@ import java.util.List;
 public class IndexController {
 
     private final MachineService machineService;
+    private final RecordService recordService;
 
     @ResponseBody
     @RequestMapping(
             value = "/",
             method = RequestMethod.GET
     )
-    public ResponseEntity<List<Machine>> main(){
+    public ResponseEntity<List<Machine>> mainMachineList(){
         List<Machine> machineList = machineService.getAllMachine();
         return ResponseEntity.status(HttpStatus.OK).body(machineList);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = "/",
+            method = RequestMethod.POST
+    )
+    public ResponseEntity<Void> mainInputData(
+            @RequestBody Record record
+    ){
+        recordService.save(record);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
