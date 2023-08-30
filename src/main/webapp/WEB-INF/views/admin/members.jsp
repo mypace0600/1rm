@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,15 +73,33 @@
                             <th scope="col">no</th>
                             <th scope="col">id</th>
                             <th scope="col">이름</th>
-                            <th scope="col">출석률</th>
-                            <th scope="col">최근 출석일</th>
-                            <th scope="col">뱃지</th>
+                            <th scope="col">성별</th>
+                            <th scope="col">이메일</th>
+                            <th scope="col">연락처</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colspan="6" >데이터가 없습니다.</td>
-                        </tr>
+                        <c:choose>
+                            <c:when test="${ fn:length(memberList) == 0}">
+                                <tr>
+                                    <td colspan="6" >데이터가 없습니다.</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="item" items="${memberList}" varStatus="status">
+                                    <tr>
+                                        <td>${status.index +1}</td>
+                                        <td>${item.loginId}</td>
+                                        <td>${item.userName}</td>
+                                        <td>${item.gender}</td>
+                                        <td>${item.email}</td>
+                                        <td>${item.phone}</td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+
+
                         </tbody>
                     </table>
                     <!-- paging -->

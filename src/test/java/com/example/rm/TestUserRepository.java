@@ -1,7 +1,8 @@
 package com.example.rm;
 
-import com.example.rm.admin.user.entity.User;
-import com.example.rm.admin.user.repository.UserRepository;
+import com.example.rm.entity.Member;
+import com.example.rm.member.repository.MemberRepository;
+import com.example.rm.enums.RoleType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -12,7 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @Slf4j
@@ -22,44 +24,57 @@ import java.time.LocalDateTime;
 public class TestUserRepository {
 
     @Autowired
-    private UserRepository repository;
+    private MemberRepository repository;
 
     @Test
-    public void A001_User_데이터_삽입(){
-        User user = new User();
-        user.setUserId("ID2308201");
-        user.setLoginId("test");
-        user.setLoginPw("123");
-        user.setUserName("test");
-        user.setEmail("test@test.com");
-        user.setPhone("123");
-        user.setAge(29);
-        user.setGender("male");
-        user.setRegisteredData(LocalDateTime.now());
-        user.setRegisteredId("test");
-        user.setEditedData(LocalDateTime.now());
-        user.setEditedId("test");
+    public void A001_Member_데이터_삽입(){
+        Member member = Member.builder()
+                .id(1)
+                .loginId("test")
+                .userName("test")
+                .password("123")
+                .gender("male")
+                .role(RoleType.USER)
+                .email("test@test.com")
+                .phone("010-0000-0000")
+                .build();
 
-        repository.save(user);
+        repository.save(member);
     }
 
     @Test
-    public void A002_User_데이터_조회(){
-        User user = repository.findByUserId("ID2308201");
-        if(user != null){
-            log.debug(user.toString());
+    public void A002_Member_전체_조회(){
+        List<Member> memberList = repository.findAll();
+        if(memberList.isEmpty()){
+            log.error("not found");
+        } else {
+            log.info(memberList.toString());
+        }
+    }
+
+    @Test
+    public void A003_Member_데이터_조회(){
+        Optional<Member> member = repository.findByLoginId("test");
+        if(member != null){
+            log.debug(member.toString());
         } else {
             log.error("not found");
         }
     }
 
-    @Test
-    public void A003_USER_데이터_삭제(){
-        User user = new User();
-        user.setUserId("ID2308201");
 
-        repository.delete(user);
+    @Test
+    public void A004_Member_삭제() throws Exception {
+        Member member = repository.findByLoginId("test").orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
+        if(member != null){
+            log.debug(member.toString());
+            repository.delete(member);
+        } else {
+            log.error("not found");
+        }
     }
+
+
 }
 
 

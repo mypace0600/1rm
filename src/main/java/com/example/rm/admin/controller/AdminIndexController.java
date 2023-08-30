@@ -1,18 +1,17 @@
-package com.example.rm.admin.user.controller;
+package com.example.rm.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class UserController {
+public class AdminIndexController {
 
     @RequestMapping(
-            value = "/admin/users",
+            value = "/admin",
             method = RequestMethod.GET
     )
-    public String users(){
-
-        return "admin/users";
+    public String index(){
+        return "admin/index";
     }
 }
