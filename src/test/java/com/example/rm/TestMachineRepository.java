@@ -5,6 +5,7 @@ import com.example.rm.entity.Member;
 import com.example.rm.enums.RoleType;
 import com.example.rm.machine.repository.MachineRepository;
 import com.example.rm.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -23,10 +24,10 @@ import java.util.Optional;
 @Commit
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RequiredArgsConstructor
 public class TestMachineRepository {
 
-    @Autowired
-    private MachineRepository repository;
+    private final MachineRepository repository;
 
     @Test
     public void A001_Machine_데이터_삽입(){

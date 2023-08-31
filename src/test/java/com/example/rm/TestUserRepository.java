@@ -29,7 +29,6 @@ public class TestUserRepository {
     @Test
     public void A001_Member_데이터_삽입(){
         Member member = Member.builder()
-                .id(1)
                 .loginId("test")
                 .userName("test")
                 .password("123")
