@@ -13,17 +13,14 @@ import java.sql.Timestamp;
 @Builder
 @ToString
 public class Record {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="member")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name="machine")
     private Machine machine;
 
     @CreationTimestamp

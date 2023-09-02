@@ -5,6 +5,7 @@ import com.example.rm.entity.Member;
 import com.example.rm.entity.Record;
 import com.example.rm.enums.RoleType;
 import com.example.rm.machine.repository.MachineRepository;
+import com.example.rm.member.repository.MemberRepository;
 import com.example.rm.record.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +13,11 @@ import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @RunWith(SpringRunner.class)
@@ -22,35 +25,35 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Commit
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RequiredArgsConstructor
+@Transactional
 class TestRecordRepository {
 
-	private final RecordRepository repository;
+	@Autowired
+	private RecordRepository repository;
+
 
 	@Test
 	public void A001_Record_데이터_삽입() {
-		Machine machine = Machine.builder()
-				.machineName("test3")
-				.machineType("test")
-				.imgUrl("testtest")
-				.thumbImgUrl("testtesttest")
-				.videoUrl("testtesttesttest")
-				.stimulatePoint("test")
-				.build();
 
 		Member member = Member.builder()
+				.id(5L)
 				.loginId("test")
-				.userName("test")
 				.password("123")
+				.userName("test")
+				.email("test")
 				.gender("male")
+				.phone("123")
 				.role(RoleType.USER)
-				.email("test@test.com")
-				.phone("010-0000-0000")
+				.oauth("kakao")
 				.build();
 
+		Machine machine = new Machine();
+		machine.setId(5L);
+		machine.setMachineName("test");
+
 		Record record = Record.builder()
-				.machine(machine)
 				.member(member)
+				.machine(machine)
 				.count(15)
 				.weight(15)
 				.setCount(4)

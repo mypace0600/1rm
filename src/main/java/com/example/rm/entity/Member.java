@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -46,7 +48,16 @@ public class Member {
     @CreationTimestamp
     private Timestamp lastLoginDate;
 
+    @Column(nullable = false, length = 50)
     private String oauth; // kakao
 
+    @OneToMany(mappedBy = "member")
+    private List<Record> records = new ArrayList<>();
+
+    // 기록을 추가하는 메서드
+    public void addRecord(Record record) {
+        records.add(record);
+        record.setMember(this);
+    }
 
 }

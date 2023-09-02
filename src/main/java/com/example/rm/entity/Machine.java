@@ -3,6 +3,8 @@ package com.example.rm.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,18 +21,21 @@ public class Machine {
     @Column(nullable = false, length = 100)
     private String machineName;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String machineType;
 
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
     private String imgUrl;
 
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
     private String thumbImgUrl;
 
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
     private String videoUrl;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String stimulatePoint;
+
+    @OneToMany(mappedBy = "machine")
+    private List<Record> records = new ArrayList<>();
 }
