@@ -13,7 +13,7 @@ public class MachineService {
 
     private final MachineRepository machineRepository;
 
-    public List<Machine> getAllMachine(){
+    public List<Machine> findAll(){
         return machineRepository.findAll();
     }
 }

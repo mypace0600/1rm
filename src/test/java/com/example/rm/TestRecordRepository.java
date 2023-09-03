@@ -63,13 +63,13 @@ class TestRecordRepository {
 	}
 
 	@Test
-	public void A002_Record_id_조회(){
+	public void A003_Record_id_조회(){
 		Record record = recordRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("@@@@@@@@@@@@ not found"));
 		log.info("@@@@@@@@@@@@@@ record :{}", record.toString());
 	}
 
 	@Test
-	public void A003_Record_특정유저의_전체기록_조회(){
+	public void A004_Record_특정유저의_전체기록_조회(){
 		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
 		List<Record> recordList = recordRepository.findAllByMember(member);
 		if(recordList.isEmpty()){
@@ -80,7 +80,7 @@ class TestRecordRepository {
 	}
 
 	@Test
-	public void A004_Record_특정유저의_전체기록_삭제(){
+	public void A005_Record_특정유저의_전체기록_삭제(){
 		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
 		recordRepository.deleteAllByMember(member);
 		List<Record> recordList = recordRepository.findAllByMember(member);
@@ -94,7 +94,7 @@ class TestRecordRepository {
 
 
 	@Test
-	public void A005_Record_특정기구의_전체기록_삭제(){
+	public void A006_Record_특정기구의_전체기록_삭제(){
 		Machine machine = machineRepository.findById(1L).orElseThrow(()-> new IllegalArgumentException("Machine not found"));
 		recordRepository.deleteAllByMachine(machine);
 		List<Record> recordList = recordRepository.findAllByMachine(machine);
@@ -107,7 +107,7 @@ class TestRecordRepository {
 	}
 
 	@Test
-	public void A006_Record_특정유저의_특정기구의_전체기록_삭제(){
+	public void A007_Record_특정유저의_특정기구의_전체기록_삭제(){
 		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
 		Machine machine = machineRepository.findById(1L).orElseThrow(()-> new IllegalArgumentException("Machine not found"));
 		recordRepository.deleteAllByMemberAndMachine(member,machine);

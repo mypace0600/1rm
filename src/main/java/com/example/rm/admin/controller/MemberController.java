@@ -19,13 +19,13 @@ public class MemberController {
     private final MemberService service;
 
     @RequestMapping(
-            value = "/admin/members",
+            value = "/admin/member",
             method = RequestMethod.GET
     )
-    public String members(Model model){
+    public String memberList(Model model){
         List<Member> memberList = service.findAll();
         log.info("@@@@@@@@@@@ memberList :{}",memberList.toString());
         model.addAttribute("memberList",memberList);
-        return "admin/members";
+        return "admin/member";
     }
 }
