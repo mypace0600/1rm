@@ -14,14 +14,13 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @Slf4j
 @Commit
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestUserRepository {
+public class TestMemberRepository {
 
     @Autowired
     private MemberRepository repository;
@@ -36,9 +35,10 @@ public class TestUserRepository {
                 .role(RoleType.USER)
                 .email("test@test.com")
                 .phone("010-0000-0000")
+                .oauth("kako")
                 .build();
 
-        repository.save(member);
+        repository.saveAndFlush(member);
     }
 
     @Test
@@ -47,18 +47,14 @@ public class TestUserRepository {
         if(memberList.isEmpty()){
             log.error("not found");
         } else {
-            log.info(memberList.toString());
+            log.info("@@@@@@@ memberList.size() :{}",memberList.size());
         }
     }
 
     @Test
     public void A003_Member_데이터_조회(){
-        Optional<Member> member = repository.findByLoginId("test");
-        if(member != null){
-            log.debug(member.toString());
-        } else {
-            log.error("not found");
-        }
+        Member member = repository.findByLoginId("test").orElseThrow(()-> new IllegalArgumentException("not found"));
+        log.info("@@@@@@@@@ member :{}",member);
     }
 
 
@@ -66,7 +62,7 @@ public class TestUserRepository {
     public void A004_Member_삭제() throws Exception {
         Member member = repository.findByLoginId("test").orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         if(member != null){
-            log.debug(member.toString());
+            log.info(member.toString());
             repository.delete(member);
         } else {
             log.error("not found");

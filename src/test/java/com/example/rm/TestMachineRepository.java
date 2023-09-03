@@ -24,10 +24,10 @@ import java.util.Optional;
 @Commit
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RequiredArgsConstructor
 public class TestMachineRepository {
 
-    private final MachineRepository repository;
+    @Autowired
+    private MachineRepository repository;
 
     @Test
     public void A001_Machine_데이터_삽입(){
@@ -55,9 +55,9 @@ public class TestMachineRepository {
 
     @Test
     public void A003_Machine_데이터_조회(){
-        Optional<Machine> machine = repository.findById(1L);
+        Machine machine = repository.findById(1L).orElseThrow(()->new IllegalArgumentException("not found"));
         if(machine != null){
-            log.debug(machine.toString());
+            log.info(machine.getMachineName());
         } else {
             log.error("not found");
         }
@@ -66,7 +66,7 @@ public class TestMachineRepository {
 
     @Test
     public void A004_Machine_삭제() throws Exception {
-        Machine machine = repository.findById(1L).orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
+        Machine machine = repository.findById(1L).orElseThrow(() -> new IllegalArgumentException("not found"));
         if(machine != null){
             log.debug(machine.toString());
             repository.delete(machine);

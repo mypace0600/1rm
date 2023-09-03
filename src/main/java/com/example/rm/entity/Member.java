@@ -1,6 +1,7 @@
 package com.example.rm.entity;
 
 import com.example.rm.enums.RoleType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,11 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class Member {
 
     @Id //Primary key
@@ -51,7 +51,8 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String oauth; // kakao
 
-    @OneToMany(mappedBy = "member")
+    @JsonIgnore
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Record> records = new ArrayList<>();
 
     // 기록을 추가하는 메서드

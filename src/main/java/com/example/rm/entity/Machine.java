@@ -1,5 +1,6 @@
 package com.example.rm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,11 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class Machine {
 
     @Id
@@ -36,6 +36,7 @@ public class Machine {
     @Column(length = 100)
     private String stimulatePoint;
 
-    @OneToMany(mappedBy = "machine")
+    @JsonIgnore
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.ALL)
     private List<Record> records = new ArrayList<>();
 }

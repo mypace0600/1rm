@@ -19,6 +19,8 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @RunWith(SpringRunner.class)
 @Slf4j
@@ -29,27 +31,17 @@ import org.springframework.transaction.annotation.Transactional;
 class TestRecordRepository {
 
 	@Autowired
-	private RecordRepository repository;
-
+	private RecordRepository recordRepository;
+	@Autowired
+	private MachineRepository machineRepository;
+	@Autowired
+	private MemberRepository memberRepository;
 
 	@Test
 	public void A001_Record_데이터_삽입() {
 
-		Member member = Member.builder()
-				.id(5L)
-				.loginId("test")
-				.password("123")
-				.userName("test")
-				.email("test")
-				.gender("male")
-				.phone("123")
-				.role(RoleType.USER)
-				.oauth("kakao")
-				.build();
-
-		Machine machine = new Machine();
-		machine.setId(5L);
-		machine.setMachineName("test");
+		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
+		Machine machine = machineRepository.findById(1L).orElseThrow(()-> new IllegalArgumentException("Machine not found"));
 
 		Record record = Record.builder()
 				.member(member)
@@ -59,7 +51,28 @@ class TestRecordRepository {
 				.setCount(4)
 				.build();
 
-		repository.save(record);
+		recordRepository.save(record);
+	}
+
+	@Test
+	public void A002_Record_전체_조회(){
+		List<Record> recordList = recordRepository.findAll();
+		if(recordList.isEmpty()){
+			log.error("not found");
+		} else {
+			log.info(recordList.toString());
+		}
+	}
+
+	@Test
+	public void A003_Record_특정유저의_기록_전체_조회(){
+		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
+		List<Record> recordList = recordRepository.findAllByMember(member);
+		if(recordList.isEmpty()){
+			log.error("not found");
+		} else {
+			log.info(recordList.toString());
+		}
 	}
 
 }
