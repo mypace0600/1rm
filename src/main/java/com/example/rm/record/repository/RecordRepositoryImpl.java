@@ -1,5 +1,6 @@
 package com.example.rm.record.repository;
 
+import com.example.rm.entity.Machine;
 import com.example.rm.entity.Member;
 import com.example.rm.entity.QRecord;
 import com.example.rm.entity.Record;
@@ -22,4 +23,47 @@ public class RecordRepositoryImpl implements RecordRepositoryCustom{
                 .where(qRecord.member.eq(member))
                 .fetch();
     }
+
+    @Override
+    public void deleteAllByMember(Member member) {
+        queryFactory
+                .delete(qRecord)
+                .where(qRecord.member.eq(member))
+                .execute();
+    }
+
+    @Override
+    public List<Record> findAllByMachine(Machine machine) {
+        return queryFactory
+                .selectFrom(qRecord)
+                .where(qRecord.machine.eq(machine))
+                .fetch();
+    }
+
+    @Override
+    public void deleteAllByMachine(Machine machine) {
+        queryFactory
+                .delete(qRecord)
+                .where(qRecord.machine.eq(machine))
+                .execute();
+    }
+
+    @Override
+    public List<Record> findAllByMemberAndMachine(Member member, Machine machine) {
+        return queryFactory
+                .selectFrom(qRecord)
+                .where(qRecord.member.eq(member))
+                .where(qRecord.machine.eq(machine))
+                .fetch();
+    }
+
+    @Override
+    public void deleteAllByMemberAndMachine(Member member, Machine machine) {
+        queryFactory
+                .delete(qRecord)
+                .where(qRecord.member.eq(member))
+                .where(qRecord.machine.eq(machine))
+                .execute();
+    }
+
 }
