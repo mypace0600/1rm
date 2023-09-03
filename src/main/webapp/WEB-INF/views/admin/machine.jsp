@@ -16,9 +16,9 @@
         <div class="topNav">
             <div class="topNavMenus">
                 <a href="/admin">1RM</a>
-                <a href="/admin/users">회원관리</a>
-                <a href="/admin/records">기록관리</a>
-                <a href="/admin/machines">기기관리</a>
+                <a href="/admin/member">회원관리</a>
+                <a href="/admin/record">기록관리</a>
+                <a href="/admin/machine">기기관리</a>
             </div>
             <div class="topNavButtons">
                 <button type="button">관리자 로그인</button>
@@ -91,7 +91,7 @@
                         <c:forEach var="item" items="${machineList}" varStatus="status">
                             <tr>
                                 <td>${status.index +1}</td>
-                                <td>${item.machineName}</td>
+                                <td><a href="/admin/machine/${item.id}">${item.machineName}</a></td>
                                 <td>${item.machineType}</td>
                                 <td>${item.stimulatePoint}</td>
                                 <td>${item.imgUrl}</td>
@@ -109,6 +109,9 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination pagination-seperated "></ul>
             </nav>
+            <div>
+                <button class="primary-btn">머신등록</button>
+            </div>
         </div>
 
     </div>

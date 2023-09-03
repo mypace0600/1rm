@@ -16,4 +16,8 @@ public class MachineService {
     public List<Machine> findAll(){
         return machineRepository.findAll();
     }
+
+    public Machine findById(Long id){
+        return machineRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Not Found"));
+    }
 }

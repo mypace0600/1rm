@@ -13,9 +13,9 @@
             <div class="topNav">
                 <div class="topNavMenus">
                     <a href="/admin">1RM</a>
-                    <a href="/admin/users">회원관리</a>
-                    <a href="/admin/records">기록관리</a>
-                    <a href="/admin/machines">기기관리</a>
+                    <a href="/admin/member">회원관리</a>
+                    <a href="/admin/record">기록관리</a>
+                    <a href="/admin/machine">기기관리</a>
                 </div>
                 <div class="topNavButtons">
                     <button type="button">관리자 로그인</button>

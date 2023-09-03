@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -24,8 +25,20 @@ public class MachineController {
     )
     public String machineList(Model model){
         List<Machine> machineList = machineService.findAll();
-        log.info("@@@@@@@@@@@ machineList :{}",machineList.toString());
         model.addAttribute("machineList",machineList);
         return "admin/machine";
+    }
+
+    @RequestMapping(
+            value = "/admin/machine/{id}",
+            method = RequestMethod.GET
+    )
+    public String machineDetail(
+            @PathVariable("id") Long id,
+            Model model
+    ){
+        Machine machine = machineService.findById(id);
+        model.addAttribute("machine",machine);
+        return "admin/machine-detail";
     }
 }
