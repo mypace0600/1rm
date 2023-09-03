@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/content.css">
     <!-- 부트스트랩 CDN 링크 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -36,12 +37,55 @@
         </div>
     </div>
     <div class="main-content">
-        <div></div>
+        <div>
+            <img src="${machine.imgUrl}"/>
+        </div>
+        <div>
+            <div>${machine.machineType}</div>
+            <div>${machine.stimulatePoint}</div>
+            <div>${machine.videoUrl}</div>
+            <input id="machineId" type="hidden" value="${machine.id}"/>
+        </div>
+    </div>
+    <div>
+        <button class="primary-btn"><a href="/admin/machine">목록</a></button>
+        <button class="primary-btn" id="patch">수정</button>
+        <button class="primary-btn" id="delete">삭제</button>
     </div>
 </main>
 <footer>
 
 </footer>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded",function (){
+       let buttonList = document.getElementsByClassName("primary-btn");
+       for(let i=0 ; i<buttonList.length ; i++){
+           buttonList[i].addEventListener("click",function (e){
+               console.log(e.target.id);
+               ajaxFunction(e.target.id.toString());
+           });
+       }
+    });
+
+    function ajaxFunction(method){
+        let machineId = document.getElementById("machineId").value.toString().trim();
+        console.log("@@@@ machineId : "+machineId);
+        let data ={};
+
+        $.ajax({
+            type:method,
+            url:"/admin/machine/"+machineId,
+            data:data,
+            dataType:JSON,
+            success:function (data){
+                console.log()
+            },
+            error:function (){
+                alert("error");
+            }
+        })
+    }
+</script>
 </html>
 

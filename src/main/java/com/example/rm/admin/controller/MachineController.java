@@ -41,4 +41,16 @@ public class MachineController {
         model.addAttribute("machine",machine);
         return "admin/machine-detail";
     }
+
+    @RequestMapping(
+            value = "/admin/machine/{id}",
+            method = RequestMethod.DELETE
+    )
+    public String machineDelete(
+            @PathVariable("id") Long id,
+            Model model
+    ){
+        machineService.delete(id);
+        return "redirect:/admin/machine";
+    }
 }

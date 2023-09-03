@@ -20,4 +20,8 @@ public class MachineService {
     public Machine findById(Long id){
         return machineRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Not Found"));
     }
+
+    public void delete(Long id){
+        machineRepository.deleteById(id);
+    }
 }
