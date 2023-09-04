@@ -32,7 +32,7 @@ public class TestMachineRepository {
     @Test
     public void A001_Machine_데이터_삽입(){
         Machine machine = Machine.builder()
-                .machineName("test3")
+                .machineName("test4")
                 .machineType("test")
                 .imgUrl("testtest")
                 .thumbImgUrl("testtesttest")
@@ -55,7 +55,7 @@ public class TestMachineRepository {
 
     @Test
     public void A003_Machine_데이터_조회(){
-        Machine machine = repository.findById(1L).orElseThrow(()->new IllegalArgumentException("not found"));
+        Machine machine = repository.findById(2L).orElseThrow(()->new IllegalArgumentException("not found"));
         if(machine != null){
             log.info(machine.getMachineName());
         } else {

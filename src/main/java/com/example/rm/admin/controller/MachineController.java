@@ -4,8 +4,10 @@ import com.example.rm.entity.Machine;
 import com.example.rm.machine.service.MachineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +28,15 @@ public class MachineController {
     public String machineList(Model model){
         List<Machine> machineList = machineService.findAll();
         model.addAttribute("machineList",machineList);
+        return "admin/machine";
+    }
+
+    @RequestMapping(
+            value = "/admin/machine",
+            method = RequestMethod.POST
+    )
+    public String machineInsert(@ModelAttribute Machine machine){
+        machineService.save(machine);
         return "admin/machine";
     }
 
@@ -51,6 +62,6 @@ public class MachineController {
             Model model
     ){
         machineService.delete(id);
-        return "redirect:/admin/machine";
+        return "redirect:admin/machine";
     }
 }

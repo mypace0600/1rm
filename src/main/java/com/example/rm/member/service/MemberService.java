@@ -11,9 +11,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberRepository userRepository;
+    private final MemberRepository memberRepository;
 
     public List<Member> findAll(){
-        return userRepository.findAll();
+        return memberRepository.findAll();
+    }
+
+    public Member findById(Long id){
+        return memberRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("not found"));
+    }
+
+    public void deleteById(Long id){
+        memberRepository.deleteById(id);
     }
 }

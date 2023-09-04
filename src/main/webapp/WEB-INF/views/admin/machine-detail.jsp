@@ -63,7 +63,7 @@
        for(let i=0 ; i<buttonList.length ; i++){
            buttonList[i].addEventListener("click",function (e){
                console.log(e.target.id);
-               ajaxFunction(e.target.id.toString());
+               ajaxFunction(e.target.id.toString().trim());
            });
        }
     });
@@ -71,13 +71,11 @@
     function ajaxFunction(method){
         let machineId = document.getElementById("machineId").value.toString().trim();
         console.log("@@@@ machineId : "+machineId);
-        let data ={};
 
         $.ajax({
             type:method,
             url:"/admin/machine/"+machineId,
-            data:data,
-            dataType:JSON,
+            data:'',
             success:function (data){
                 console.log()
             },
