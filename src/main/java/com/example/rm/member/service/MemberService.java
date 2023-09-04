@@ -24,4 +24,8 @@ public class MemberService {
     public void deleteById(Long id){
         memberRepository.deleteById(id);
     }
+
+    public void roleUpdate(Member member){
+        memberRepository.saveAndFlush(member);
+    }
 }
