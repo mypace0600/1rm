@@ -22,10 +22,10 @@
                 <a href="/admin/machine">기기관리</a>
             </div>
             <div class="topNavButtons">
-                <button type="button">관리자 로그인</button>
+               <%-- <button type="button">관리자 로그인</button>
                 <button type="button">관리자 가입</button>
                 <button type="button" style="display: none">로그아웃</button>
-                <button type="button" style="display: none">프로필</button>
+                <button type="button" style="display: none">프로필</button>--%>
             </div>
         </div>
     </nav>
@@ -41,7 +41,7 @@
                     <option value="ID">id</option>
                 </select>
                 <input type="text">
-                <button>검색</button>
+                <div>검색</div>
             </div>
         </div>
     </div>
@@ -85,14 +85,14 @@
                 <c:choose>
                     <c:when test="${ fn:length(machineList) == 0}">
                         <tr>
-                            <td colspan="6" >데이터가 없습니다.</td>
+                            <td colspan="7" >데이터가 없습니다.</td>
                         </tr>
                     </c:when>
                     <c:otherwise>
                         <c:forEach var="item" items="${machineList}" varStatus="status">
                             <tr>
                                 <td>${status.index +1}</td>
-                                <td><a href="/admin/machine/${item.id}">${item.machineName}</a></td>
+                                <td><a href="/admin/machine/detail/${item.id}">${item.machineName}</a></td>
                                 <td>${item.machineType}</td>
                                 <td>${item.stimulatePoint}</td>
                                 <td>${item.imgUrl}</td>

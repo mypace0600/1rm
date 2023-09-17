@@ -33,57 +33,61 @@
 <main class="main">
     <div class="main-content">
         <div class="search-box">
-            <div class="search-box-title">${machine.machineName}</div>
+            <div class="search-box-title">
+                <label for="machineName">이름</label>
+                <input name="machineName" id="machineName" type="text" value="${machine.machineName}"/>
+            </div>
         </div>
     </div>
     <div class="main-content">
         <div>
-            <img src="${machine.imgUrl}"/>
+            <label for="imgUrl">이미지</label>
+            <input name="imgUrl" id="imgUrl" type="text" value="${machine.imgUrl}"/>
         </div>
         <div>
-            <div>${machine.machineType}</div>
-            <div>${machine.stimulatePoint}</div>
-            <div>${machine.videoUrl}</div>
+            <div>
+                <label for="machineType">머신타입</label>
+                <input name="machineType" id="machineType" type="text" value="${machine.machineType}"/>
+            </div>
+            <div>
+                <label for="stimulatePoint">자극지점</label>
+                <input name="stimulatePoint" id="stimulatePoint" type="text" value="${machine.stimulatePoint}"/>
+            </div>
+            <div>
+                <label for="videoUrl">비디오</label>
+                <input name="videoUrl" id="videoUrl" type="text" value="${machine.videoUrl}"/>
+            </div>
             <input id="machineId" type="hidden" value="${machine.id}"/>
         </div>
     </div>
     <div>
         <button class="primary-btn"><a href="/admin/machine">목록</a></button>
-        <button class="primary-btn" id="patch">수정</button>
-        <button class="primary-btn" id="delete">삭제</button>
+        <button class="primary-btn" id="patchBtn">수정</button>
+        <button class="primary-btn" id="deleteBtn">삭제</button>
     </div>
 </main>
 <footer>
 
 </footer>
 </body>
+</html>
 <script>
-    document.addEventListener("DOMContentLoaded",function (){
-       let buttonList = document.getElementsByClassName("primary-btn");
-       for(let i=0 ; i<buttonList.length ; i++){
-           buttonList[i].addEventListener("click",function (e){
-               console.log(e.target.id);
-               ajaxFunction(e.target.id.toString().trim());
-           });
-       }
-    });
-
-    function ajaxFunction(method){
-        let machineId = document.getElementById("machineId").value.toString().trim();
-        console.log("@@@@ machineId : "+machineId);
+    const deleteBtn = document.getElementById("deleteBtn");
+    deleteBtn.addEventListener("click",()=>{
+        const targetId = document.getElementById("machineId").value;
+        const url = "/admin/machine/"+targetId;
+        console.log("url : "+url);
 
         $.ajax({
-            type:method,
-            url:"/admin/machine/"+machineId,
-            data:'',
-            success:function (data){
-                console.log()
-            },
-            error:function (){
-                alert("error");
-            }
+            type: "delete",
+            url: url,
+            dataType:'json',
+        }).done(function (){
+            alert("삭제 완료");
+            location.href = "/admin/machine";
+        }).fail(function (){
+            alert("삭제 실패");
+            location.href = "/admin/machine";
         })
-    }
+    });
 </script>
-</html>
-

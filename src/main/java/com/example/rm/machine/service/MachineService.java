@@ -29,4 +29,8 @@ public class MachineService {
     public void delete(Long id){
         machineRepository.deleteById(id);
     }
+
+    public void update(Machine machine){
+        machineRepository.save(machine);
+    }
 }

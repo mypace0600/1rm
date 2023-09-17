@@ -32,7 +32,7 @@ public class TestMachineRepository {
     @Test
     public void A001_Machine_데이터_삽입(){
         Machine machine = Machine.builder()
-                .machineName("test4")
+                .machineName("test5")
                 .machineType("test")
                 .imgUrl("testtest")
                 .thumbImgUrl("testtesttest")
