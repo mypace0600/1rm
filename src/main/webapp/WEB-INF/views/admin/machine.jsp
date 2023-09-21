@@ -111,7 +111,7 @@
                 <ul class="pagination pagination-seperated "></ul>
             </nav>
             <div>
-                <button class="primary-btn">머신등록</button>
+                <a href="/admin/machine/register" ><button class="primary-btn">머신등록</button></a>
             </div>
         </div>
 

@@ -62,7 +62,7 @@
     </div>
     <div>
         <button class="primary-btn"><a href="/admin/machine">목록</a></button>
-        <button class="primary-btn" id="patchBtn">수정</button>
+        <button class="primary-btn" id="saveBtn">저장</button>
         <button class="primary-btn" id="deleteBtn">삭제</button>
     </div>
 </main>
@@ -81,13 +81,72 @@
         $.ajax({
             type: "delete",
             url: url,
-            dataType:'json',
-        }).done(function (){
-            alert("삭제 완료");
-            location.href = "/admin/machine";
-        }).fail(function (){
-            alert("삭제 실패");
-            location.href = "/admin/machine";
+            success: function(data) {
+                alert("성공");
+                location.href="/admin/machine";
+            },
+            error: function(xhr, error, msg) {
+                console.log(error);
+                console.log(msg);
+            }
         })
+    });
+
+    function machineUpdate(data,targetId){
+        const url = '/admin/machine/'+targetId;
+        console.log("id : "+targetId);
+        $.ajax({
+            type: "put",
+            url: url,
+            data:data,
+            success: function(data) {
+                alert("성공");
+                location.href="/admin/machine";
+            },
+            error: function(xhr, error, msg) {
+                console.log(error);
+                console.log(msg);
+            }
+        });
+    }
+
+    function machineInsert(data){
+        const url = '/admin/machine';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data:data,
+            success: function(data) {
+                alert("성공");
+                location.href="/admin/machine";
+            },
+            error: function(xhr, error, msg) {
+                console.log(error);
+                console.log(msg);
+            }
+        });
+    }
+
+    const saveBtn = document.getElementById("saveBtn");
+    saveBtn.addEventListener("click",function (){
+        const targetId = document.getElementById("machineId").value;
+        const machineName = document.getElementById("machineName").value;
+        const imgUrl = document.getElementById("imgUrl").value;
+        const machineType = document.getElementById("machineType").value;
+        const stimulatePoint = document.getElementById("stimulatePoint").value;
+        const videoUrl = document.getElementById("videoUrl").value;
+
+        const data = {
+            machineName:machineName,
+            imgUrl:imgUrl,
+            stimulatePoint:stimulatePoint,
+            machineType:machineType,
+            videoUrl:videoUrl
+        };
+        if(null != targetId && '' != targetId){
+            machineUpdate(data,targetId);
+        } else {
+            machineInsert(data);
+        }
     });
 </script>
