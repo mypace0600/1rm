@@ -61,12 +61,16 @@
                     </div>
                     <table class="table table-striped">
                         <colgroup>
+                            <col span="5%">
+                            <col span="15%">
                             <col span="10%">
+                            <col span="5%">
                             <col span="20%">
-                            <col span="20%">
-                            <col span="20%">
-                            <col span="20%">
-                            <col span="10%">
+                            <col span="15%">
+                            <col span="*">
+                            <col span="*">
+                            <col span="5%">
+                            <col span="5%">
                         </colgroup>
                         <thead>
                         <tr>
@@ -76,24 +80,30 @@
                             <th scope="col">성별</th>
                             <th scope="col">이메일</th>
                             <th scope="col">연락처</th>
+                            <th scope="col">등록일</th>
+                            <th scope="col">최근로그인</th>
+                            <th scope="col">권한</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:choose>
                             <c:when test="${ fn:length(memberList) == 0}">
                                 <tr>
-                                    <td colspan="6" >데이터가 없습니다.</td>
+                                    <td colspan="9" >데이터가 없습니다.</td>
                                 </tr>
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var="item" items="${memberList}" varStatus="status">
-                                    <tr>
+                                    <tr class="memberRow" id="memberId_${item.id}">
                                         <td>${status.index +1}</td>
                                         <td>${item.loginId}</td>
                                         <td>${item.userName}</td>
                                         <td>${item.gender}</td>
                                         <td>${item.email}</td>
                                         <td>${item.phone}</td>
+                                        <td>${item.createDate}</td>
+                                        <td>${item.lastLoginDate}</td>
+                                        <td>${item.role}</td>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
@@ -115,4 +125,14 @@
     </footer>
 </body>
 </html>
-
+<script>
+    const memberRowList = document.getElementsByClassName("memberRow");
+    for(let i = 0 ; i < memberRowList.length ; i++){
+        memberRowList[i].addEventListener("click",function(event){
+            const memberIds = event.currentTarget.id.split("_");
+            const memberId = memberIds[1];
+            console.log(memberId);
+            location.href = "/admin/member/"+memberId;
+        });
+    };
+</script>

@@ -1,4 +1,4 @@
-package com.example.rm.admin.controller;
+package com.example.rm.admin.controller.apiController;
 
 import com.example.rm.entity.Machine;
 import com.example.rm.machine.service.MachineService;

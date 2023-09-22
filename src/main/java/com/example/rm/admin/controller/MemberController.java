@@ -41,21 +41,4 @@ public class MemberController {
         return "admin/member-detail";
     }
 
-    @RequestMapping(
-            value = "/admin/member/{id}",
-            method = RequestMethod.DELETE
-    )
-    public String memberDelete(@PathVariable("id")Long id, Model model){
-        service.deleteById(id);
-        return "redirect:admin/member";
-    }
-
-    @RequestMapping(
-            value = "/admin/member",
-            method = RequestMethod.PATCH
-    )
-    public String memberRoleUpdate(@RequestBody Member member, Model model) {
-        service.roleUpdate(member);
-        return "redirect:admin/member";
-    }
 }
