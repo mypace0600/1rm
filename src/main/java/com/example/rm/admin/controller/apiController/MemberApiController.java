@@ -1,20 +1,18 @@
 package com.example.rm.admin.controller.apiController;
 
 import com.example.rm.entity.Member;
+import com.example.rm.enums.RoleType;
 import com.example.rm.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MemberApiController {
 
@@ -30,11 +28,14 @@ public class MemberApiController {
     }
 
     @RequestMapping(
-            value = "/admin/member",
-            method = RequestMethod.PATCH
+            value = "/admin/member/{id}",
+            method = RequestMethod.PUT
     )
-    public String memberRoleUpdate(@RequestBody Member member, Model model) {
-        service.roleUpdate(member);
+    public String memberRoleUpdate(@PathVariable("id")Long id, @RequestParam String role, Model model) {
+        Member selectedMember = service.findById(id);
+        RoleType roleType = RoleType.valueOf(role);
+        selectedMember.setRole(roleType);
+        service.roleUpdate(selectedMember);
         return "redirect:admin/member";
     }
 }

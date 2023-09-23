@@ -34,39 +34,43 @@
     <div class="main-content">
         <div>
             <label for="loginId">아이디</label>
-            <input name="loginId" id="loginId" type="text" value="${member.loginId}"/>
+            <input name="loginId" id="loginId" type="text" value="${member.loginId}"disabled/>
         </div>
         <div>
             <div>
                 <label for="userName">이름</label>
-                <input name="userName" id="userName" type="text" value="${member.userName}"/>
+                <input name="userName" id="userName" type="text" value="${member.userName}"disabled/>
             </div>
             <div>
                 <label for="email">이메일</label>
-                <input name="email" id="email" type="text" value="${member.email}"/>
+                <input name="email" id="email" type="text" value="${member.email}"disabled/>
             </div>
             <div>
                 <label for="gender">성별</label>
-                <input name="gender" id="gender" type="text" value="${member.gender}"/>
+                <input name="gender" id="gender" type="text" value="${member.gender}"disabled/>
             </div>
             <div>
                 <label for="phone">연락처</label>
-                <input name="phone" id="phone" type="text" value="${member.phone}"/>
+                <input name="phone" id="phone" type="text" value="${member.phone}" disabled/>
             </div>
             <div>
                 <label for="role">권한</label>
-                <input name="role" id="role" type="text" value="${member.role}"/>
+                <select name="role" id="role">
+                    <option disabled>선택하시오</option>
+                    <option <c:if test="${roleType == 'ADMIN'}">selected</c:if> >ADMIN</option>
+                    <option <c:if test="${roleType == 'USER'}">selected</c:if> >USER</option>
+                </select>
             </div>
             <div>
                 <label for="lastLoginDate">마지막 접속일</label>
-                <input name="lastLoginDate" id="lastLoginDate" type="text" value="${member.lastLoginDate}"/>
+                <input name="lastLoginDate" id="lastLoginDate" type="text" value="${member.lastLoginDate}"disabled/>
             </div>
             <div>
                 <label for="createDate">계정 생성일</label>
-                <input name="createDate" id="createDate" type="text" value="${member.createDate}"/>
+                <input name="createDate" id="createDate" type="text" value="${member.createDate}"disabled/>
             </div>
 
-            <input id="memberId" type="hidden" value="${member.id}"/>
+            <input id="memberId" type="hidden" value="${member.id}"disabled/>
         </div>
     </div>
     <div>
@@ -81,8 +85,7 @@
 </body>
 </html>
 <script>
-    /**
-     *
+
     const deleteBtn = document.getElementById("deleteBtn");
     deleteBtn.addEventListener("click",()=>{
         const targetId = document.getElementById("memberId").value;
@@ -103,9 +106,10 @@
         })
     });
 
-    function machineUpdate(data,targetId){
+    function memberUpdate(data,targetId){
         const url = '/admin/member/'+targetId;
         console.log("id : "+targetId);
+        console.log("url : "+url);
         $.ajax({
             type: "put",
             url: url,
@@ -121,43 +125,20 @@
         });
     }
 
-    function machineInsert(data){
-        const url = '/admin/member';
-        $.ajax({
-            type: "POST",
-            url: url,
-            data:data,
-            success: function(data) {
-                alert("성공");
-                location.href="/admin/member";
-            },
-            error: function(xhr, error, msg) {
-                console.log(error);
-                console.log(msg);
-            }
-        });
-    }
+
+
 
     const saveBtn = document.getElementById("saveBtn");
     saveBtn.addEventListener("click",function (){
-        const targetId = document.getElementById("mem").value;
-        const machineName = document.getElementById("machineName").value;
-        const imgUrl = document.getElementById("imgUrl").value;
-        const machineType = document.getElementById("machineType").value;
-        const stimulatePoint = document.getElementById("stimulatePoint").value;
-        const videoUrl = document.getElementById("videoUrl").value;
+        const targetId = document.getElementById("memberId").value;
+        const roleSelectBox = document.getElementById("role");
+        const role = roleSelectBox.options[roleSelectBox.selectedIndex].value;
 
         const data = {
-            machineName:machineName,
-            imgUrl:imgUrl,
-            stimulatePoint:stimulatePoint,
-            machineType:machineType,
-            videoUrl:videoUrl
+            role:role
         };
         if(null != targetId && '' != targetId){
-            machineUpdate(data,targetId);
-        } else {
-            machineInsert(data);
+            memberUpdate(data,targetId);
         }
-    }); */
+    });
 </script>

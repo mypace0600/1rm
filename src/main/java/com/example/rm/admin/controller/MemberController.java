@@ -37,6 +37,9 @@ public class MemberController {
     )
     public String memberDetail(@PathVariable("id")Long id, Model model){
         Member member = service.findById(id);
+        String roleType = member.getRole().toString();
+
+        model.addAttribute("roleType",roleType);
         model.addAttribute("member",member);
         return "admin/member-detail";
     }
