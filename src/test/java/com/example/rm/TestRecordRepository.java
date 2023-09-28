@@ -38,8 +38,8 @@ class TestRecordRepository {
 	@Test
 	public void A001_Record_데이터_삽입() {
 
-		Member member = memberRepository.findById(5L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
-		Machine machine = machineRepository.findById(1L).orElseThrow(()-> new IllegalArgumentException("Machine not found"));
+		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
+		Machine machine = machineRepository.findById(10L).orElseThrow(()-> new IllegalArgumentException("Machine not found"));
 
 		Record record = Record.builder()
 				.member(member)
@@ -60,6 +60,7 @@ class TestRecordRepository {
 		} else {
 			log.info(recordList.toString());
 		}
+
 	}
 
 	@Test
@@ -119,4 +120,5 @@ class TestRecordRepository {
 			log.info(recordList.toString());
 		}
 	}
+
 }

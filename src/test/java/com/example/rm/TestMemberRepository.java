@@ -28,9 +28,9 @@ public class TestMemberRepository {
     @Test
     public void A001_Member_데이터_삽입(){
         Member member = Member.builder()
-                .loginId("test1")
-                .userName("test")
-                .password("123")
+                .loginId("admin")
+                .userName("admin")
+                .password("1234")
                 .gender("male")
                 .role(RoleType.USER)
                 .email("test@test.com")
