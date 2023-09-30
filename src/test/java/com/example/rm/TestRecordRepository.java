@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,25 +43,52 @@ class TestRecordRepository {
 		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
 		Machine machine = machineRepository.findById(10L).orElseThrow(()-> new IllegalArgumentException("Machine not found"));
 
-		Record record = Record.builder()
-				.member(member)
-				.machine(machine)
-				.count(15)
-				.weight(15)
-				.setCount(4)
-				.build();
-
-		recordRepository.save(record);
+		for(int i=0;i<16;i++) {
+			log.info(String.valueOf(i));
+			Record record = Record.builder()
+					.member(member)
+					.machine(machine)
+					.count(15)
+					.weight(15)
+					.setCount(4)
+					.build();
+			recordRepository.save(record);
+		}
 	}
 
 	@Test
 	public void A002_Record_전체_조회(){
-		List<Record> recordList = recordRepository.findAll();
+
+		PageRequest pageable = PageRequest.of(0,10);
+
+		Page<Record> recordList = recordRepository.findAll(pageable);
 		if(recordList.isEmpty()){
 			log.error("@@@@@@@@@@@@@@@@ not found");
 		} else {
 			log.info(recordList.toString());
 		}
+		double totalCount = recordRepository.count();
+		log.info("@@@@@@ totalCount : {}",totalCount);
+		double rowSize = 10;
+		log.info("@@@@@@ rowSize : {}",rowSize);
+		double nowPage = 2;
+		log.info("@@@@@@ nowPage : {}",nowPage);
+		double pageSize = 10;
+		log.info("@@@@@@ pageSize :{}",pageSize);
+
+		double totalPage = Math.ceil(totalCount/rowSize);
+		log.info("@@@@@@ totalPage : {}",totalPage);
+		double pageGroup = Math.ceil(nowPage/totalPage);
+		log.info("@@@@@@ pageGroup : {}",pageGroup);
+		double lastPage = pageGroup * pageSize > totalPage ? totalPage : pageGroup * pageSize;
+		log.info("@@@@@@ lastPage : {}",lastPage);
+		double firstPage = lastPage - pageSize - 1 <= 0?1:lastPage - pageSize - 1;
+		log.info("@@@@@@ firstPage : {}",firstPage);
+
+		double lastRow = nowPage*rowSize>totalCount?totalCount:nowPage*rowSize;
+		log.info("@@@@@@ lastRow : {}",lastRow);
+		double firstRow = lastRow - pageGroup*rowSize + 1;
+		log.info("@@@@@@ firstRow : {}",firstRow);
 
 	}
 

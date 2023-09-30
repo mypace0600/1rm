@@ -53,7 +53,7 @@
                 </div>
                 <div class="table-meta-paging">
                     <span>총 건</span>
-                    <select>
+                    <select id="rowSize">
                         <option value="10">10건</option>
                         <option value="30">30건</option>
                         <option value="50">50건</option>
@@ -100,6 +100,12 @@
             <!-- paging -->
             <nav aria-label="Page navigation example">
                 <ul class="pagination pagination-seperated "></ul>
+                <input type="hidden" id="totalCount" value="${paging.totalCount}"/>
+                <input type="hidden" id="pageSize" value="${paging.pageSize}"/>
+                <input type="hidden" id="totalPage" value="${paging.totalPage}"/>
+                <input type="hidden" id="pageGroup" value="${paging.pageGroup}"/>
+                <input type="hidden" id="firstPage" value="${paging.firstPage}"/>
+                <input type="hidden" id="lastPage" value="${paging.lastPage}"/>
             </nav>
         </div>
 
@@ -110,4 +116,11 @@
 </footer>
 </body>
 </html>
-
+<script>
+    let firstPage = document.getElementById("firstPage").value;
+    let lastPage = document.getElementById("lastPage").value;
+    let pageSize = document.getElementById("pageSize").value;
+    for(let i = firstPage ; i<=lastPage ; i++){
+        document.createElement("span")
+    }
+</script>

@@ -28,15 +28,4 @@ public class IndexController {
         return ResponseEntity.status(HttpStatus.OK).body(machineList);
     }
 
-    @ResponseBody
-    @RequestMapping(
-            value = "/",
-            method = RequestMethod.POST
-    )
-    public ResponseEntity<Void> mainInputData(
-            @RequestBody Record record
-    ){
-        recordService.save(record);
-        return new ResponseEntity(HttpStatus.OK);
-    }
 }
