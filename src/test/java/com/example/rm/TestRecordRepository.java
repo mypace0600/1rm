@@ -43,7 +43,7 @@ class TestRecordRepository {
 		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
 		Machine machine = machineRepository.findById(10L).orElseThrow(()-> new IllegalArgumentException("Machine not found"));
 
-		for(int i=0;i<16;i++) {
+		for(int i=0;i<100;i++) {
 			log.info(String.valueOf(i));
 			Record record = Record.builder()
 					.member(member)

@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
+<style>
+    #pageContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #pageBox{
+        display: flex;
+        width: 60%;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
 <body>
 <header>
     <nav>
@@ -52,12 +65,7 @@
                     기록목록
                 </div>
                 <div class="table-meta-paging">
-                    <span>총 건</span>
-                    <select id="rowSize">
-                        <option value="10">10건</option>
-                        <option value="30">30건</option>
-                        <option value="50">50건</option>
-                    </select>
+                    <span>총 ${paging.totalCount}건</span>
                 </div>
             </div>
             <table class="table table-striped">
@@ -82,7 +90,7 @@
                     <c:otherwise>
                         <c:forEach var="item" items="${recordList}" varStatus="status">
                             <tr>
-                                <td>${status.index +1}</td>
+                                <td>${item.id}</td>
                                 <td><a href="/admin/record/detail/${item.id}">${item.member.userName}</a></td>
                                 <td>${item.machine.machineName}</td>
                                 <td>${item.recordDate}</td>
@@ -98,14 +106,16 @@
                 </tbody>
             </table>
             <!-- paging -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination pagination-seperated "></ul>
+            <nav id="pageContainer">
+                <ul id="pageBox"></ul>
                 <input type="hidden" id="totalCount" value="${paging.totalCount}"/>
                 <input type="hidden" id="pageSize" value="${paging.pageSize}"/>
+                <input type="hidden" id="rowSize" value="${paging.rowSize}"/>
                 <input type="hidden" id="totalPage" value="${paging.totalPage}"/>
                 <input type="hidden" id="pageGroup" value="${paging.pageGroup}"/>
                 <input type="hidden" id="firstPage" value="${paging.firstPage}"/>
                 <input type="hidden" id="lastPage" value="${paging.lastPage}"/>
+                <input type="hidden" id="nowPage" value="${paging.nowPage}"/>
             </nav>
         </div>
 
@@ -117,10 +127,58 @@
 </body>
 </html>
 <script>
+
     let firstPage = document.getElementById("firstPage").value;
     let lastPage = document.getElementById("lastPage").value;
     let pageSize = document.getElementById("pageSize").value;
+    let pageBox = document.getElementById("pageBox");
+    let nowPage = document.getElementById("nowPage").value;
+    let totalPage = document.getElementById("totalPage").value;
+    let rowSize = document.getElementById("rowSize").value;
+    console.log("@@@@@@@ firstPage : "+firstPage);
+    console.log("@@@@@@@ lastPage : "+lastPage);
     for(let i = firstPage ; i<=lastPage ; i++){
-        document.createElement("span")
+        let aTag = document.createElement("a");
+        let numberBox = document.createElement("li");
+        let number = document.createTextNode(i);
+        numberBox.appendChild(number);
+        aTag.appendChild(numberBox);
+        if(i==nowPage){
+            console.log("nowPage : "+ nowPage);
+            aTag.setAttribute("style","text-decoration:underline;")
+        }
+        aTag.setAttribute("href","/admin/record?nowPage="+i+"&rowSize="+rowSize);
+        pageBox.appendChild(aTag);
     }
+
+    document.addEventListener("DOMContentLoaded",function(){
+        if(parseInt(totalPage)>parseInt(lastPage)){
+            let nextATag = document.createElement("a");
+            let nextLiTag = document.createElement("li");
+            let nextText = document.createTextNode("next");
+            nextLiTag.appendChild(nextText);
+            nextATag.appendChild(nextLiTag);
+
+            let nextFirstPage = parseInt(firstPage)+10>parseInt(totalPage)?parseInt(totalPage):parseInt(firstPage)+10;
+            console.log("nextFirstPage : "+nextFirstPage);
+            nextATag.setAttribute("href","/admin/record?nowPage="+nextFirstPage.toString()+"&rowSize="+rowSize);
+            pageBox.appendChild(nextATag);
+        }
+
+        if(parseInt(firstPage)>1){
+            let previousATag = document.createElement("a");
+            let previousLiTag = document.createElement("li");
+            let previousText = document.createTextNode("previous");
+            previousLiTag.appendChild(previousText);
+            previousATag.appendChild(previousLiTag);
+            let previousFirstPage = parseInt(firstPage)-10>0?parseInt(firstPage)-10:1;
+            console.log("previousFirstPage : "+previousFirstPage);
+            previousATag.setAttribute("href","/admin/record?nowPage="+previousFirstPage.toString()+"&rowSize="+rowSize);
+            pageBox.prepend(previousATag);
+        }
+    })
+
+
+
+
 </script>
