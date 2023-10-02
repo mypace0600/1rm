@@ -137,20 +137,21 @@
     let rowSize = document.getElementById("rowSize").value;
     console.log("@@@@@@@ firstPage : "+firstPage);
     console.log("@@@@@@@ lastPage : "+lastPage);
-    for(let i = firstPage ; i<=lastPage ; i++){
-        let aTag = document.createElement("a");
-        let numberBox = document.createElement("li");
-        let number = document.createTextNode(i);
-        numberBox.appendChild(number);
-        aTag.appendChild(numberBox);
-        if(i==nowPage){
-            console.log("nowPage : "+ nowPage);
-            aTag.setAttribute("style","text-decoration:underline;")
+    if(firstPage != lastPage) {
+        for (let i = firstPage; i <= lastPage; i++) {
+            let aTag = document.createElement("a");
+            let numberBox = document.createElement("li");
+            let number = document.createTextNode(i);
+            numberBox.appendChild(number);
+            aTag.appendChild(numberBox);
+            if (i == nowPage) {
+                console.log("nowPage : " + nowPage);
+                aTag.setAttribute("style", "text-decoration:underline;")
+            }
+            aTag.setAttribute("href", "/admin/record?nowPage=" + i + "&rowSize=" + rowSize);
+            pageBox.appendChild(aTag);
         }
-        aTag.setAttribute("href","/admin/record?nowPage="+i+"&rowSize="+rowSize);
-        pageBox.appendChild(aTag);
     }
-
     document.addEventListener("DOMContentLoaded",function(){
         if(parseInt(totalPage)>parseInt(lastPage)){
             let nextATag = document.createElement("a");

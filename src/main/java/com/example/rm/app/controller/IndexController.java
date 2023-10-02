@@ -24,8 +24,7 @@ public class IndexController {
             method = RequestMethod.GET
     )
     public ResponseEntity<List<Machine>> mainMachineList(){
-        List<Machine> machineList = machineService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(machineList);
+        return null;
     }
 
 }

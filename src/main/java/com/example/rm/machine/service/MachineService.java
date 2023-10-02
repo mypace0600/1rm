@@ -4,8 +4,10 @@ import com.example.rm.entity.Machine;
 import com.example.rm.machine.repository.MachineRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Criteria;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,8 +16,16 @@ public class MachineService {
 
     private final MachineRepository machineRepository;
 
-    public List<Machine> findAll(){
-        return machineRepository.findAll();
+    public List<Machine> findAll(PageRequest pageRequest){
+        List<Machine> resultList = new ArrayList<>();
+        for(Machine item : machineRepository.findAll(pageRequest)){
+            resultList.add(item);
+        }
+        return resultList;
+    }
+
+    public double getTotalCount(){
+        return machineRepository.count();
     }
 
     public void save(Machine machine){

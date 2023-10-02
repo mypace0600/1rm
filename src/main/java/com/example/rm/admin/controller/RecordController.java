@@ -41,22 +41,23 @@ public class RecordController {
         PageRequest pageRequest = PageRequest.of(paging.getNowPage()-1,paging.getRowSize());
         List<Record> recordList = service.findAll(pageRequest);
 
+        pagination(model, totalCount, paging);
+        model.addAttribute("recordList",recordList);
+        model.addAttribute("paging",paging);
+        return "admin/record";
+    }
+
+    static void pagination(Model model, double totalCount, Paging paging) {
         double totalPage = Math.ceil(totalCount/paging.getRowSize());
         double nowPageD = paging.getNowPage();
         double pageSizeD = paging.getPageSize();
         double pageGroup = Math.ceil(nowPageD/pageSizeD);
-        log.info("@@@@@@@ pageGroup :{}",pageGroup);
         double lastPage = pageGroup * paging.getPageSize() > totalPage ? totalPage : pageGroup * paging.getPageSize();
         double firstPage = (pageGroup-1)*paging.getPageSize()+1;
-        log.info("@@@@@@@ firstPage :{}",firstPage);
-        log.info("@@@@@@@ lastPage :{}",lastPage);
         paging.setTotalCount((int) totalCount);
         paging.setTotalPage((int) totalPage);
         paging.setFirstPage((int) firstPage);
         paging.setLastPage((int) lastPage);
-        model.addAttribute("paging",paging);
-        model.addAttribute("recordList",recordList);
-        return "admin/record";
     }
 
 
