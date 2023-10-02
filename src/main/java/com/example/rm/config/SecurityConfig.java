@@ -52,7 +52,6 @@ public class SecurityConfig  {
                 .authenticated()
                 .and()
                 .formLogin()
-                .
         ;
         return http.build();
     }

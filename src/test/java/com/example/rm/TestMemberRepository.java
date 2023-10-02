@@ -69,6 +69,13 @@ public class TestMemberRepository {
         }
     }
 
+    @Test
+    public void A005_Member_권한변경()throws Exception{
+        Member member = repository.findByLoginId("admin").orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
+        member.setRole(RoleType.ADMIN);
+        repository.save(member);
+    }
+
 
 }
 
