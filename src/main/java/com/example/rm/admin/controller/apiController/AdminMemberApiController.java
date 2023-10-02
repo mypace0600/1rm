@@ -5,16 +5,13 @@ import com.example.rm.enums.RoleType;
 import com.example.rm.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class MemberApiController {
+public class AdminMemberApiController {
 
     private final MemberService service;
 

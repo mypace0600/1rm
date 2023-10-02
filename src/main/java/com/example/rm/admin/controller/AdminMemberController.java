@@ -1,8 +1,8 @@
 package com.example.rm.admin.controller;
 
-import com.example.rm.entity.Machine;
+import com.example.rm.entity.Member;
 import com.example.rm.entity.Paging;
-import com.example.rm.machine.service.MachineService;
+import com.example.rm.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -12,24 +12,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class MachineController {
+public class AdminMemberController {
 
-    private final MachineService machineService;
+    private final MemberService service;
 
     @RequestMapping(
-            value = "/admin/machine",
+            value = "/admin/member",
             method = RequestMethod.GET
     )
-    public String machineList(
+    public String memberList(
             @RequestParam(value="nowPage", required = false) String nowPage,
             @RequestParam(value="rowSize",required = false) String rowSize,
             Model model
     ){
-        double totalCount = machineService.getTotalCount();
+        double totalCount = service.getTotalCount();
         Paging paging = new Paging();
         if(null != nowPage){
             paging.setNowPage(Integer.valueOf(nowPage));
@@ -38,11 +37,11 @@ public class MachineController {
             paging.setRowSize(Integer.valueOf(rowSize));
         }
         PageRequest pageRequest = PageRequest.of(paging.getNowPage()-1,paging.getRowSize());
-        List<Machine> machineList = machineService.findAll(pageRequest);
+        List<Member> memberList = service.findAll(pageRequest);
         pagination(model, totalCount, paging);
-        model.addAttribute("machineList",machineList);
+        model.addAttribute("memberList",memberList);
         model.addAttribute("paging",paging);
-        return "admin/machine";
+        return "admin/member";
     }
 
     static void pagination(Model model, double totalCount, Paging paging) {
@@ -58,24 +57,17 @@ public class MachineController {
         paging.setLastPage((int) lastPage);
     }
 
-     @RequestMapping(
-            value = "/admin/machine/detail/{id}",
+    @RequestMapping(
+            value = "/admin/member/{id}",
             method = RequestMethod.GET
     )
-    public String machineDetail(
-            @PathVariable("id") int id,
-            Model model
-    ){
-        Machine machine = machineService.findById(Long.valueOf(id));
-        model.addAttribute("machine",machine);
-        return "admin/machine-detail";
+    public String memberDetail(@PathVariable("id")Long id, Model model){
+        Member member = service.findById(id);
+        String roleType = member.getRole().toString();
+
+        model.addAttribute("roleType",roleType);
+        model.addAttribute("member",member);
+        return "admin/member-detail";
     }
 
-    @RequestMapping(
-            value="/admin/machine/register",
-            method = RequestMethod.GET
-    )
-    public String machineRegister(){
-        return "admin/machine-detail";
-    }
 }

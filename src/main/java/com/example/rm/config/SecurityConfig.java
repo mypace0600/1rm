@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Role;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -45,15 +46,13 @@ public class SecurityConfig  {
         http
                 .csrf().disable() // csrf 토큰 비활성화 (테스트시에만 걸어두는게 좋음)
                 .authorizeHttpRequests()
-                .antMatchers("/","/auth/**","/js/**","/css/**","/img/**","/admin/**")
+                .antMatchers("/","/auth/**","/js/**","/css/**","/img/**","/admin")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/auth/loginForm")
-                .loginProcessingUrl("/auth/loginProc") // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인을 한다.
-                .defaultSuccessUrl("/") // 로그인 성공시 "/" 주소로 들어가게 됨
+                .
         ;
         return http.build();
     }

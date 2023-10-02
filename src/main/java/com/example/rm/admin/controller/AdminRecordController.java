@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class RecordController {
+public class AdminRecordController {
 
     private final RecordService service;
 
