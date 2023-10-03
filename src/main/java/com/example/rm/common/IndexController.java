@@ -1,14 +1,20 @@
 package com.example.rm.common;
 
+import com.example.rm.entity.Member;
+import com.example.rm.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class IndexController {
+
+    private final MemberService memberService;
 
     @RequestMapping(
             value = "/",
@@ -27,27 +33,28 @@ public class IndexController {
     }
 
     @RequestMapping(
-            value = "/login",
+            value = "/loginForm",
             method = RequestMethod.GET
     )
-    public String login(){
-        return "user/login";
+    public String loginForm(){
+        return "user/loginForm";
     }
 
    @RequestMapping(
-            value = "/join",
+            value = "/joinForm",
             method = RequestMethod.GET
     )
-    public String join(){
-        return "user/join";
+    public String joinForm(){
+        return "user/joinForm";
     }
 
     @RequestMapping(
-            value = "/joinProc",
+            value = "/join",
             method = RequestMethod.POST
     )
-    public String joinProc(){
-        return "user/joinProc";
+    public String join(Member member){
+        memberService.join(member);
+        return "redirect:/loginForm";
     }
 
 }

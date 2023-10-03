@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Member {
 
     @Id
@@ -48,8 +49,6 @@ public class Member {
     @CreationTimestamp
     private Timestamp lastLoginDate;
 
-    @Column(nullable = false, length = 50)
-    private String oauth;
 
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)

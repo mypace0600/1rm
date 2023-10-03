@@ -9,14 +9,16 @@
 </head>
 <body>
         <main>
-            <h1>로그인페이지</h1>
+            <h1>회원가입 페이지</h1>
             <hr>
-            <form>
-                <label for="loginId">아이디</label>
-                <input type="text" id="loginId" name="loginId" placeholder="loginId"/>
-                <label for="password">비밀번호</label>
+            <form action="/join" method="POST">
+                <input type="text" id="username" name="username" placeholder="username"/>
                 <input type="password" id="password" name="password" placeholder="password"/>
-                <button type="button">로그인</button>
+                <input type="email" id="email" name="email" placeholder="email"/>
+                <input type="text" id="nickname" name="nickname" placeholder="nick"/>
+                <input type="text" id="phone" name="phone" placeholder="phone"/>
+                <input type="text" id="gender" name="gender" placeholder="gender"/>
+                <button>회원가입</button>
             </form>
         </main>
     <footer>

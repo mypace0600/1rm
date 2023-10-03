@@ -1,9 +1,11 @@
 package com.example.rm.member.service;
 
 import com.example.rm.entity.Member;
+import com.example.rm.enums.RoleType;
 import com.example.rm.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberRepository memberRepository;
 
     public double getTotalCount(){
@@ -36,5 +39,14 @@ public class MemberService {
 
     public void roleUpdate(Member member){
         memberRepository.saveAndFlush(member);
+    }
+
+    public void join(Member member){
+        RoleType userRole = RoleType.USER;
+        member.setRole(userRole);
+        String rawPassword = member.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        member.setPassword(encPassword);
+        memberRepository.save(member);
     }
 }
