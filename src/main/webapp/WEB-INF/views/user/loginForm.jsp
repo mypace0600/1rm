@@ -14,7 +14,7 @@
             <form method="POST" action="/login">
                 <input type="text" id="username" name="username" placeholder="username"/>
                 <input type="password" id="password" name="password" placeholder="password"/>
-                <button type="button">로그인</button>
+                <button>로그인</button>
             </form>
             <a href="/joinForm">회원가입을 아직 하지 않으셨나요?</a>
         </main>
