@@ -28,14 +28,13 @@ public class TestMemberRepository {
     @Test
     public void A001_Member_데이터_삽입(){
         Member member = Member.builder()
-                .loginId("admin")
-                .userName("admin")
+                .nickname("admin")
+                .username("admin")
                 .password("1234")
                 .gender("male")
-                .role(RoleType.USER)
+                .role(RoleType.ROLE_USER)
                 .email("test@test.com")
                 .phone("010-0000-0000")
-                .oauth("kako")
                 .build();
 
         repository.save(member);
@@ -53,14 +52,14 @@ public class TestMemberRepository {
 
     @Test
     public void A003_Member_데이터_조회(){
-        Member member = repository.findByLoginId("test").orElseThrow(()-> new IllegalArgumentException("not found"));
+        Member member = repository.findByUsername("test").orElseThrow(()-> new IllegalArgumentException("not found"));
         log.info("@@@@@@@@@ member :{}",member);
     }
 
 
     @Test
     public void A004_Member_삭제() throws Exception {
-        Member member = repository.findByLoginId("test").orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
+        Member member = repository.findByUsername("test").orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         if(member != null){
             log.info(member.toString());
             repository.delete(member);
@@ -69,12 +68,6 @@ public class TestMemberRepository {
         }
     }
 
-    @Test
-    public void A005_Member_권한변경()throws Exception{
-        Member member = repository.findByLoginId("admin").orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-        member.setRole(RoleType.ADMIN);
-        repository.save(member);
-    }
 
 
 }

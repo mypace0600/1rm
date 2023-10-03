@@ -1,5 +1,5 @@
 package com.example.rm.enums;
 
 public enum RoleType {
-    ADMIN, USER
+    ROLE_ADMIN, ROLE_USER
 }

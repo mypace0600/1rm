@@ -43,15 +43,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-            .antMatchers("/admin/**").access("hasRole('ADMIN')")
+            .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
             .anyRequest().permitAll()
             .and()
             .formLogin()
             .loginPage("/loginForm")
             .loginProcessingUrl("/login")
             .defaultSuccessUrl("/");
-
         return http.build();
     }
-
 }

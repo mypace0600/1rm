@@ -42,8 +42,8 @@ public class MemberService {
     }
 
     public void join(Member member){
-        RoleType userRole = RoleType.USER;
-        member.setRole(userRole);
+        RoleType adminRole = RoleType.ROLE_ADMIN;
+        member.setRole(adminRole);
         String rawPassword = member.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         member.setPassword(encPassword);

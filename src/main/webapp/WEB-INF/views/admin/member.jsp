@@ -96,8 +96,8 @@
                                 <c:forEach var="item" items="${memberList}" varStatus="status">
                                     <tr class="memberRow" id="memberId_${item.id}">
                                         <td>${status.index +1}</td>
-                                        <td>${item.loginId}</td>
-                                        <td>${item.userName}</td>
+                                        <td>${item.username}</td>
+                                        <td>${item.nickname}</td>
                                         <td>${item.gender}</td>
                                         <td>${item.email}</td>
                                         <td>${item.phone}</td>
@@ -115,6 +115,14 @@
                     <!-- paging -->
                     <nav aria-label="Page navigation example">
                         <ul class="pagination pagination-seperated "></ul>
+                        <input type="hidden" id="totalCount" value="${paging.totalCount}"/>
+                        <input type="hidden" id="pageSize" value="${paging.pageSize}"/>
+                        <input type="hidden" id="rowSize" value="${paging.rowSize}"/>
+                        <input type="hidden" id="totalPage" value="${paging.totalPage}"/>
+                        <input type="hidden" id="pageGroup" value="${paging.pageGroup}"/>
+                        <input type="hidden" id="firstPage" value="${paging.firstPage}"/>
+                        <input type="hidden" id="lastPage" value="${paging.lastPage}"/>
+                        <input type="hidden" id="nowPage" value="${paging.nowPage}"/>
                     </nav>
                 </div>
 

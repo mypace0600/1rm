@@ -9,7 +9,7 @@
 </head>
 <body>
         <main>
-            메인
+            <h1>메인</h1>
         </main>
     <footer>
 
