@@ -17,27 +17,27 @@ import java.util.List;
 @Builder
 public class Member {
 
-    @Id //Primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 프로젝트에서 연결된 DB 넘버링 전략을 따라간다.
-    private Long id; // 시퀀스, auto-increment
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false, length = 100, unique = true)
-    private String loginId; // 아이디
-
-    @Column(nullable = false, length = 100) // hash 암호화 예정
-    private String password; // 비밀번호
+    private String nickname;
 
     @Column(nullable = false, length = 100)
-    private String userName; // 사용자 이름
+    private String password;
+
+    @Column(nullable = false, length = 100, unique = true)
+    private String username;
 
     @Column(nullable = false, length = 50)
-    private String email; // 이메일
+    private String email;
 
     @Column(nullable = false, length = 50)
-    private String gender; // 이메일
+    private String gender;
 
     @Column(nullable = false, length = 50)
-    private String phone; // 연락처
+    private String phone;
 
     @Enumerated(EnumType.STRING)
     private RoleType role;
@@ -49,7 +49,7 @@ public class Member {
     private Timestamp lastLoginDate;
 
     @Column(nullable = false, length = 50)
-    private String oauth; // kakao
+    private String oauth;
 
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)

@@ -8,24 +8,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="topNav">
-                <div class="topNavMenus">
-                    <a href="/admin">1RM</a>
-                    <a href="/admin/member">회원관리</a>
-                    <a href="/admin/record">기록관리</a>
-                    <a href="/admin/machine">기기관리</a>
-                </div>
-            </div>
-        </nav>
-    </header>
         <main>
-            <form method="post" action="/admin/loginPage">
+            <h1>로그인페이지</h1>
+            <hr>
+            <form>
                 <label for="loginId">아이디</label>
-                <input type="text" id="loginId" name="loginId"/>
+                <input type="text" id="loginId" name="loginId" placeholder="loginId"/>
                 <label for="password">비밀번호</label>
-                <input type="password" id="password" name="password"/>
+                <input type="password" id="password" name="password" placeholder="password"/>
                 <button type="button">로그인</button>
             </form>
         </main>

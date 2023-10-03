@@ -30,7 +30,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final DateTimePath<java.sql.Timestamp> lastLoginDate = createDateTime("lastLoginDate", java.sql.Timestamp.class);
 
-    public final StringPath loginId = createString("loginId");
+    public final StringPath nickname = createString("nickname");
 
     public final StringPath oauth = createString("oauth");
 
@@ -42,7 +42,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final EnumPath<com.example.rm.enums.RoleType> role = createEnum("role", com.example.rm.enums.RoleType.class);
 
-    public final StringPath userName = createString("userName");
+    public final StringPath username = createString("username");
 
     public QMember(String variable) {
         super(Member.class, forVariable(variable));
