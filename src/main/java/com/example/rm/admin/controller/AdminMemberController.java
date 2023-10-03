@@ -6,6 +6,7 @@ import com.example.rm.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,8 @@ public class AdminMemberController {
     public String memberList(
             @RequestParam(value="nowPage", required = false) String nowPage,
             @RequestParam(value="rowSize",required = false) String rowSize,
-            Model model
+            Model model,
+            Authentication auth
     ){
         double totalCount = service.getTotalCount();
         Paging paging = new Paging();
@@ -41,6 +43,7 @@ public class AdminMemberController {
         pagination(model, totalCount, paging);
         model.addAttribute("memberList",memberList);
         model.addAttribute("paging",paging);
+        model.addAttribute("auth",auth);
         return "admin/member";
     }
 
@@ -61,12 +64,17 @@ public class AdminMemberController {
             value = "/admin/member/{id}",
             method = RequestMethod.GET
     )
-    public String memberDetail(@PathVariable("id")Long id, Model model){
+    public String memberDetail(
+            @PathVariable("id")Long id,
+            Model model,
+            Authentication auth
+    ){
         Member member = service.findById(id);
         String roleType = member.getRole().toString();
 
         model.addAttribute("roleType",roleType);
         model.addAttribute("member",member);
+        model.addAttribute("auth",auth);
         return "admin/member-detail";
     }
 

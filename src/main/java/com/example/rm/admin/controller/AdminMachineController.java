@@ -6,6 +6,7 @@ import com.example.rm.machine.service.MachineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,8 @@ public class AdminMachineController {
     public String machineList(
             @RequestParam(value="nowPage", required = false) String nowPage,
             @RequestParam(value="rowSize",required = false) String rowSize,
-            Model model
+            Model model,
+            Authentication auth
     ){
         double totalCount = machineService.getTotalCount();
         Paging paging = new Paging();
@@ -42,6 +44,7 @@ public class AdminMachineController {
         pagination(model, totalCount, paging);
         model.addAttribute("machineList",machineList);
         model.addAttribute("paging",paging);
+        model.addAttribute("auth",auth);
         return "admin/machine";
     }
 
@@ -64,10 +67,12 @@ public class AdminMachineController {
     )
     public String machineDetail(
             @PathVariable("id") int id,
-            Model model
+            Model model,
+            Authentication auth
     ){
         Machine machine = machineService.findById(Long.valueOf(id));
         model.addAttribute("machine",machine);
+        model.addAttribute("auth",auth);
         return "admin/machine-detail";
     }
 

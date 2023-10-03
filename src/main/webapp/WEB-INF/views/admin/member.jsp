@@ -20,12 +20,11 @@
                     <a href="/admin/record">기록관리</a>
                     <a href="/admin/machine">기기관리</a>
                 </div>
-                <%--<div class="topNavButtons">
-                    <button type="button">관리자 로그인</button>
-                    <button type="button">관리자 가입</button>
-                    <button type="button" style="display: none">로그아웃</button>
-                    <button type="button" style="display: none">프로필</button>
-                </div>--%>
+                <div class="topNavButtons">
+                    <c:if test="${auth != null}">
+                        <a href="/logout" ><button type="button">로그아웃</button></a>
+                    </c:if>
+                </div>
             </div>
         </nav>
     </header>

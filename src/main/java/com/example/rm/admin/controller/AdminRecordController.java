@@ -6,6 +6,7 @@ import com.example.rm.record.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,8 @@ public class AdminRecordController {
     public String recordList(
             @RequestParam(value="nowPage", required = false) String nowPage,
             @RequestParam(value="rowSize",required = false) String rowSize,
-            Model model
+            Model model,
+            Authentication auth
     ){
         double totalCount = service.getTotalCount();
 
@@ -44,6 +46,7 @@ public class AdminRecordController {
         pagination(model, totalCount, paging);
         model.addAttribute("recordList",recordList);
         model.addAttribute("paging",paging);
+        model.addAttribute("auth",auth);
         return "admin/record";
     }
 
