@@ -24,7 +24,7 @@ public class IndexController {
             value = "/",
             method = RequestMethod.GET
     )
-    public String index() {
+    public String index(Authentication auth) {
         return "user/index";
     }
 

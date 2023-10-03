@@ -32,12 +32,12 @@ public class TestMachineRepository {
     @Test
     public void A001_Machine_데이터_삽입(){
         Machine machine = Machine.builder()
-                .machineName("test5")
-                .machineType("test")
-                .imgUrl("testtest")
-                .thumbImgUrl("testtesttest")
-                .videoUrl("testtesttesttest")
-                .stimulatePoint("test")
+                .machineName("데드리프트")
+                .machineType("weight")
+                .imgUrl("imgUrl")
+                .thumbImgUrl("thumbImgUrl")
+                .videoUrl("videoUrl")
+                .stimulatePoint("back")
                 .build();
 
         repository.save(machine);
