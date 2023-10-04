@@ -1,9 +1,11 @@
 package com.example.rm.common;
 
+import com.example.rm.entity.Box;
 import com.example.rm.entity.Member;
 import com.example.rm.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -20,13 +22,7 @@ public class IndexController {
 
     private final MemberService memberService;
 
-    @RequestMapping(
-            value = "/",
-            method = RequestMethod.GET
-    )
-    public String index(Authentication auth) {
-        return "user/index";
-    }
+
 
     @RequestMapping(
             value = "/admin",

@@ -4,6 +4,7 @@ import com.example.rm.entity.Machine;
 import com.example.rm.entity.Member;
 import com.example.rm.enums.RoleType;
 import com.example.rm.machine.repository.MachineRepository;
+import com.example.rm.machine.service.MachineService;
 import com.example.rm.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -28,6 +30,8 @@ public class TestMachineRepository {
 
     @Autowired
     private MachineRepository repository;
+    @Autowired
+    private MachineService machineService;
 
     @Test
     public void A001_Machine_데이터_삽입(){
@@ -45,7 +49,8 @@ public class TestMachineRepository {
 
     @Test
     public void A002_Machine_전체_조회(){
-        List<Machine> machineList = repository.findAll();
+        PageRequest pageRequest = PageRequest.of(1,10);
+        List<Machine> machineList = machineService.findAll(pageRequest);
         if(machineList.isEmpty()){
             log.error("not found");
         } else {

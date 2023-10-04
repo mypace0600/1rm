@@ -29,6 +29,12 @@ public class MemberService {
         return resultList;
     }
 
+    public Member findByUsername(String username){
+        return memberRepository.findByUsername(username).orElseThrow(()->{
+            return new IllegalArgumentException("해당 사용자는 없습니다.");
+        });
+    }
+
     public Member findById(Long id){
         return memberRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("not found"));
     }
