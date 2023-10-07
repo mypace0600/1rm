@@ -28,6 +28,8 @@ public class QNotice extends EntityPathBase<Notice> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isImportant = createBoolean("isImportant");
+
     public final BooleanPath isPopup = createBoolean("isPopup");
 
     public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);

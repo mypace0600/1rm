@@ -11,23 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="topNav">
-                <div class="topNavMenus">
-                    <a href="/admin">1RM</a>
-                    <a href="/admin/member">회원관리</a>
-                    <a href="/admin/record">기록관리</a>
-                    <a href="/admin/machine">기기관리</a>
-                </div>
-                <div class="topNavButtons">
-                    <c:if test="${auth != null}">
-                        <a href="/logout" ><button type="button">로그아웃</button></a>
-                    </c:if>
-                </div>
-            </div>
-        </nav>
-    </header>
+<jsp:include page="../layout/header.jsp"/>
         <main class="main">
             <div class="main-content">
                 <div class="search-box">

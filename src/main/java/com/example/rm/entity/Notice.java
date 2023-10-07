@@ -41,6 +41,9 @@ public class Notice {
     private boolean isPopup;
 
     @Column
+    private boolean isImportant;
+
+    @Column
     private int viewCount;
 
     @Column

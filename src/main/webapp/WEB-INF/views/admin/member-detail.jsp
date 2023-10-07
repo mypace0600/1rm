@@ -12,23 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
-<header>
-    <nav>
-        <div class="topNav">
-            <div class="topNavMenus">
-                <a href="/admin">1RM</a>
-                <a href="/admin/member">회원관리</a>
-                <a href="/admin/record">기록관리</a>
-                <a href="/admin/machine">기기관리</a>
-            </div>
-            <div class="topNavButtons">
-                <c:if test="${auth != null}">
-                    <a href="/logout" ><button type="button">로그아웃</button></a>
-                </c:if>
-            </div>
-        </div>
-    </nav>
-</header>
+<jsp:include page="../layout/header.jsp"/>
 <main class="main">
     <div class="main-content">
         <div>

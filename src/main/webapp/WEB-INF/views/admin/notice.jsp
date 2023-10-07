@@ -29,12 +29,12 @@
 <main class="main">
     <div class="main-content">
         <div class="search-box">
-            <div class="search-box-title">머신검색</div>
+            <div class="search-box-title">공제검색</div>
             <div class="search-box-detail">
                 <select>
                     <option value="ALL">전체</option>
-                    <option value="NAME">이름</option>
-                    <option value="ID">id</option>
+                    <option value="MACHINE">제목</option>
+                    <option value="MEMBER">내용</option>
                 </select>
                 <input type="text">
                 <div>검색</div>
@@ -45,55 +45,39 @@
         <div class="user-list-table">
             <div class="table-meta">
                 <div class="table-meta-title">
-                    머신목록
+                    기록목록
                 </div>
                 <div class="table-meta-paging">
                     <span>총 ${paging.totalCount}건</span>
-                    <select>
-                        <option value="10">10건</option>
-                        <option value="30">30건</option>
-                        <option value="50">50건</option>
-                    </select>
                 </div>
             </div>
             <table class="table table-striped">
-                <colgroup>
-                    <col span="10%">
-                    <col span="10%">
-                    <col span="10%">
-                    <col span="10%">
-                    <col span="20%">
-                    <col span="20%">
-                    <col span="20%">
-                </colgroup>
                 <thead>
-                <tr>
-                    <th scope="col">no</th>
-                    <th scope="col">이름</th>
-                    <th scope="col">타입</th>
-                    <th scope="col">자극포인트</th>
-                    <th scope="col">이미지</th>
-                    <th scope="col">썸네일</th>
-                    <th scope="col">동영상</th>
-                </tr>
+                    <tr>
+                        <th scope="col">no</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">기록일사</th>
+                        <th scope="col">조회수</th>
+                        <th scope="col">좋아요수</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <c:choose>
-                    <c:when test="${ fn:length(machineList) == 0}">
+                    <c:when test="${ fn:length(recordList) == 0}">
                         <tr>
-                            <td colspan="7" >데이터가 없습니다.</td>
+                            <td colspan="6" >데이터가 없습니다.</td>
                         </tr>
                     </c:when>
                     <c:otherwise>
-                        <c:forEach var="item" items="${machineList}" varStatus="status">
+                        <c:forEach var="item" items="${noticeList}" varStatus="status">
                             <tr>
-                                <td>${status.index +1}</td>
-                                <td><a href="/admin/machine/detail/${item.id}">${item.machineName}</a></td>
-                                <td>${item.machineType}</td>
-                                <td>${item.stimulatePoint}</td>
-                                <td>${item.imgUrl}</td>
-                                <td>${item.thumbImgUrl}</td>
-                                <td>${item.videoUrl}</td>
+                                <td>${item.id}</td>
+                                <td><a href="/admin/notice/${item.id}">${item.title}</a></td>
+                                <td>${item.member.username}</td>
+                                <td>${item.createdDate}</td>
+                                <td>${item.viewCount}</td>
+                                <td>${item.likeCount}</td>
                             </tr>
                         </c:forEach>
                     </c:otherwise>
@@ -114,9 +98,6 @@
                 <input type="hidden" id="lastPage" value="${paging.lastPage}"/>
                 <input type="hidden" id="nowPage" value="${paging.nowPage}"/>
             </nav>
-            <div>
-                <a href="/admin/machine/register" ><button class="primary-btn">머신등록</button></a>
-            </div>
         </div>
 
     </div>
@@ -126,7 +107,6 @@
 </footer>
 </body>
 </html>
-
 <script>
 
     let firstPage = document.getElementById("firstPage").value;
@@ -149,11 +129,10 @@
                 console.log("nowPage : " + nowPage);
                 aTag.setAttribute("style", "text-decoration:underline;")
             }
-            aTag.setAttribute("href", "/admin/record?nowPage=" + i + "&rowSize=" + rowSize);
+            aTag.setAttribute("href", "/admin/notice?nowPage=" + i + "&rowSize=" + rowSize);
             pageBox.appendChild(aTag);
         }
     }
-
     document.addEventListener("DOMContentLoaded",function(){
         if(parseInt(totalPage)>parseInt(lastPage)){
             let nextATag = document.createElement("a");
@@ -164,7 +143,7 @@
 
             let nextFirstPage = parseInt(firstPage)+10>parseInt(totalPage)?parseInt(totalPage):parseInt(firstPage)+10;
             console.log("nextFirstPage : "+nextFirstPage);
-            nextATag.setAttribute("href","/admin/record?nowPage="+nextFirstPage.toString()+"&rowSize="+rowSize);
+            nextATag.setAttribute("href","/admin/notice?nowPage="+nextFirstPage.toString()+"&rowSize="+rowSize);
             pageBox.appendChild(nextATag);
         }
 
@@ -176,7 +155,7 @@
             previousATag.appendChild(previousLiTag);
             let previousFirstPage = parseInt(firstPage)-10>0?parseInt(firstPage)-10:1;
             console.log("previousFirstPage : "+previousFirstPage);
-            previousATag.setAttribute("href","/admin/record?nowPage="+previousFirstPage.toString()+"&rowSize="+rowSize);
+            previousATag.setAttribute("href","/admin/notice?nowPage="+previousFirstPage.toString()+"&rowSize="+rowSize);
             pageBox.prepend(previousATag);
         }
     })
@@ -185,4 +164,3 @@
 
 
 </script>
-

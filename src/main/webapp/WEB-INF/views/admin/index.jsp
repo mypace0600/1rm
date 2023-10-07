@@ -10,24 +10,8 @@
     <!-- 부트스트랩 CDN 링크 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+<jsp:include page="../layout/header.jsp"/>
 <body>
-<header>
-    <nav>
-        <div class="topNav">
-            <div class="topNavMenus">
-                <a href="/admin">1RM</a>
-                <a href="/admin/member">회원관리</a>
-                <a href="/admin/record">기록관리</a>
-                <a href="/admin/machine">기기관리</a>
-            </div>
-            <div class="topNavButtons">
-                <c:if test="${auth != null}">
-                    <a href="/logout" ><button type="button">로그아웃</button></a>
-                </c:if>
-            </div>
-        </div>
-    </nav>
-</header>
 <main class="main">
     <div class="main-content">
         <h1>관리자 메인</h1>
