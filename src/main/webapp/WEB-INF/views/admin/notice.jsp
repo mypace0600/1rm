@@ -98,6 +98,9 @@
                 <input type="hidden" id="lastPage" value="${paging.lastPage}"/>
                 <input type="hidden" id="nowPage" value="${paging.nowPage}"/>
             </nav>
+            <div>
+                <a href="/admin/notice/register" ><button class="primary-btn">공지등록</button></a>
+            </div>
         </div>
 
     </div>
