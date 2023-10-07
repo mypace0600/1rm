@@ -49,15 +49,30 @@ public class Member {
     @CreationTimestamp
     private Timestamp lastLoginDate;
 
-
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Record> records = new ArrayList<>();
+    private List<Record> recordList = new ArrayList<>();
 
-    // 기록을 추가하는 메서드
     public void addRecord(Record record) {
-        records.add(record);
+        recordList.add(record);
         record.setMember(this);
     }
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Notice> noticeList = new ArrayList<>();
+
+    public void addNotice(Notice notice) {
+        noticeList.add(notice);
+        notice.setMember(this);
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Reply> replyList = new ArrayList<>();
+
+    public void addReply(Reply reply) {
+        replyList.add(reply);
+        reply.setMember(this);
+    }
 }

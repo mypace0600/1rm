@@ -34,7 +34,7 @@ public class IndexApiController {
             Member member = memberService.findByUsername(username);
             result.put("member",member);
         }
-        PageRequest pageRequest = PageRequest.of(0,10);
+        PageRequest pageRequest = PageRequest.of(0,3);
         List<Machine> machineList = machineService.findAll(pageRequest);
         result.put("machineList",machineList);
         int machineCount = (int) machineService.getTotalCount();
