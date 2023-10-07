@@ -21,11 +21,11 @@ public class Reply {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "notice_id")
+    @JoinColumn(name = "notice")
     private Notice notice;
 
     @Lob

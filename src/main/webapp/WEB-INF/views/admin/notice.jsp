@@ -64,7 +64,7 @@
                 </thead>
                 <tbody>
                 <c:choose>
-                    <c:when test="${ fn:length(recordList) == 0}">
+                    <c:when test="${ fn:length(noticeList) == 0}">
                         <tr>
                             <td colspan="6" >데이터가 없습니다.</td>
                         </tr>
@@ -119,8 +119,6 @@
     let nowPage = document.getElementById("nowPage").value;
     let totalPage = document.getElementById("totalPage").value;
     let rowSize = document.getElementById("rowSize").value;
-    console.log("@@@@@@@ firstPage : "+firstPage);
-    console.log("@@@@@@@ lastPage : "+lastPage);
     if(firstPage != lastPage) {
         for (let i = firstPage; i <= lastPage; i++) {
             let aTag = document.createElement("a");
@@ -129,7 +127,6 @@
             numberBox.appendChild(number);
             aTag.appendChild(numberBox);
             if (i == nowPage) {
-                console.log("nowPage : " + nowPage);
                 aTag.setAttribute("style", "text-decoration:underline;")
             }
             aTag.setAttribute("href", "/admin/notice?nowPage=" + i + "&rowSize=" + rowSize);
@@ -145,7 +142,6 @@
             nextATag.appendChild(nextLiTag);
 
             let nextFirstPage = parseInt(firstPage)+10>parseInt(totalPage)?parseInt(totalPage):parseInt(firstPage)+10;
-            console.log("nextFirstPage : "+nextFirstPage);
             nextATag.setAttribute("href","/admin/notice?nowPage="+nextFirstPage.toString()+"&rowSize="+rowSize);
             pageBox.appendChild(nextATag);
         }
@@ -157,7 +153,6 @@
             previousLiTag.appendChild(previousText);
             previousATag.appendChild(previousLiTag);
             let previousFirstPage = parseInt(firstPage)-10>0?parseInt(firstPage)-10:1;
-            console.log("previousFirstPage : "+previousFirstPage);
             previousATag.setAttribute("href","/admin/notice?nowPage="+previousFirstPage.toString()+"&rowSize="+rowSize);
             pageBox.prepend(previousATag);
         }

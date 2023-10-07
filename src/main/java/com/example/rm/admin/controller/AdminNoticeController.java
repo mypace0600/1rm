@@ -1,8 +1,13 @@
 package com.example.rm.admin.controller;
 
+import com.example.rm.entity.Member;
 import com.example.rm.entity.Notice;
 import com.example.rm.entity.Paging;
+import com.example.rm.entity.Reply;
+import com.example.rm.member.service.MemberService;
 import com.example.rm.notice.service.NoticeService;
+import com.example.rm.reply.repository.ReplyRepository;
+import com.example.rm.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +28,8 @@ import java.util.List;
 public class AdminNoticeController {
 
     private final NoticeService noticeService;
+    private final MemberService memberService;
+    private final ReplyService replyService;
 
     @RequestMapping(
             value = "/admin/notice",
@@ -71,11 +78,27 @@ public class AdminNoticeController {
     public String noticeDetail(
             @PathVariable("id") int id,
             Model model,
-            Authentication auth
+            Authentication auth,
+            @RequestParam(value="nowPage", required = false) String nowPage,
+            @RequestParam(value="rowSize",required = false) String rowSize
     ){
+        Paging paging = new Paging();
+        if(null != nowPage){
+            paging.setNowPage(Integer.valueOf(nowPage));
+        }
+        if(null != rowSize){
+            paging.setRowSize(Integer.valueOf(rowSize));
+        }
+        PageRequest pageRequest = PageRequest.of(paging.getNowPage()-1,paging.getRowSize());
         Notice notice = noticeService.findById(Long.valueOf(id));
         model.addAttribute("notice",notice);
-        model.addAttribute("auth",auth);
+        Member member = memberService.findByUsername(auth.getName());
+        model.addAttribute("principal",member);
+        List<Reply> replyList = replyService.findAllByNoticeId(pageRequest,notice);
+        model.addAttribute("replyList",replyList);
+        double totalCount = replyService.getTotalCount();
+        pagination(model, totalCount, paging);
+        model.addAttribute("paging",paging);
         return "admin/notice-detail";
     }
 
@@ -83,7 +106,10 @@ public class AdminNoticeController {
             value="/admin/notice/register",
             method = RequestMethod.GET
     )
-    public String noticeRegister(){
+    public String noticeRegister(Authentication auth, Model model){
+        log.info("@@@@@@@ username :{}",auth.getName());
+        Member member = memberService.findByUsername(auth.getName());
+        model.addAttribute("principal",member);
         return "admin/notice-detail";
     }
 }

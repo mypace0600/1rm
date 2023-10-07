@@ -1,10 +1,7 @@
 package com.example.rm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -13,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,8 +21,11 @@ public class Notice {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member")
     private Member member;
+
+    @Column
+    private Long memberId;
 
     @Column(length = 200)
     private String title;
@@ -38,10 +38,10 @@ public class Notice {
     private List<Reply> replyList = new ArrayList<>();
 
     @Column
-    private boolean isPopup;
+    private Boolean isPopup;
 
     @Column
-    private boolean isImportant;
+    private Boolean isImportant;
 
     @Column
     private int viewCount;

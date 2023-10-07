@@ -36,6 +36,8 @@ public class QNotice extends EntityPathBase<Notice> {
 
     public final QMember member;
 
+    public final NumberPath<Long> memberId = createNumber("memberId", Long.class);
+
     public final ListPath<Reply, QReply> replyList = this.<Reply, QReply>createList("replyList", Reply.class, QReply.class, PathInits.DIRECT2);
 
     public final StringPath textContent = createString("textContent");
