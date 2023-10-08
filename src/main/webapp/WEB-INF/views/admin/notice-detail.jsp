@@ -57,6 +57,7 @@
                             <span>${item.member.username}</span>
                             <span>${item.likeCount}</span>
                             <span>${item.createdDate}</span>
+                            <button class="replyButton" id="reply${item.id}" type="button">X</button>
                         </div>
                     </c:forEach>
                 </c:otherwise>
@@ -225,4 +226,29 @@
             pageBox.prepend(previousATag);
         }
     })
+
+    const replyButtons = document.getElementsByClassName("replyButton");
+    for(let i=0;i<replyButtons.length;i++){
+        replyButtons[i].addEventListener("click",function(e){
+            let targetId = e.target.id;
+            let replyId = parseInt(targetId.toString().replace("reply",""));
+            replyDelete(replyId)
+        })
+    }
+
+    function replyDelete(replyId){
+        console.log(replyId);
+        $.ajax({
+            type: "DELETE",
+            url: "/admin/reply/"+replyId,
+            success: function(data) {
+                alert("성공");
+                location.href="/admin/notice/"+noticeId;
+            },
+            error: function(xhr, error, msg) {
+                console.log(error);
+                console.log(msg);
+            }
+        });
+    }
 </script>

@@ -32,7 +32,11 @@ public class QReply extends EntityPathBase<Reply> {
 
     public final QMember member;
 
+    public final NumberPath<Long> memberId = createNumber("memberId", Long.class);
+
     public final QNotice notice;
+
+    public final NumberPath<Long> noticeId = createNumber("noticeId", Long.class);
 
     public final StringPath textContent = createString("textContent");
 

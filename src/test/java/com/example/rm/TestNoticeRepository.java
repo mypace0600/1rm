@@ -59,13 +59,13 @@ class TestNoticeRepository {
 	@Test
 	public void A002_Notice_Reply_add(){
 
-		Notice notice = noticeRepository.findById(2L).orElseThrow(()->{
+		Notice notice = noticeRepository.findById(1L).orElseThrow(()->{
 			return new IllegalArgumentException("해당 공지는 없습니다.");
 		});
 		Member member = memberRepository.findByUsername("admin").orElseThrow(()->{
 			return new IllegalArgumentException("해당 사용자는 없습니다.");
 		});
-		for(int i=0;i<30;i++){
+		for(int i=0;i<4;i++){
 			Reply reply = Reply.builder()
 					.notice(notice)
 					.textContent("test")

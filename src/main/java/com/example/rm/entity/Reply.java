@@ -24,9 +24,15 @@ public class Reply {
     @JoinColumn(name = "member")
     private Member member;
 
+    @Column
+    private Long memberId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "notice")
     private Notice notice;
+
+    @Column
+    private Long noticeId;
 
     @Lob
     private String textContent;

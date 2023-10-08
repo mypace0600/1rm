@@ -59,7 +59,7 @@ public class TestMemberRepository {
 
     @Test
     public void A004_Member_삭제() throws Exception {
-        Member member = repository.findByUsername("test").orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
+        Member member = repository.findByUsername("admin").orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         if(member != null){
             log.info(member.toString());
             repository.delete(member);
