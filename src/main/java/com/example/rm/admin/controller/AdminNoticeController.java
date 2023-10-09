@@ -95,7 +95,7 @@ public class AdminNoticeController {
         model.addAttribute("principal",member);
         List<Reply> replyList = replyService.findAllByNoticeId(pageRequest,notice);
         model.addAttribute("replyList",replyList);
-        int totalCount = replyService.getTotalCountByNoticeId(notice);
+        double totalCount = replyService.getTotalCountByNoticeId(notice);
         pagination(model, totalCount, paging);
         model.addAttribute("paging",paging);
         return "admin/notice-detail";
@@ -133,7 +133,7 @@ public class AdminNoticeController {
         Notice notice = noticeService.findById(Long.valueOf(id));
         PageRequest pageRequest = PageRequest.of(Integer.parseInt(nowPage)-1, Integer.parseInt(rowSize));
         List<Reply> replyList = replyService.findAllByNoticeId(pageRequest,notice);
-        int totalCount = replyService.getTotalCountByNoticeId(notice);
+        double totalCount = replyService.getTotalCountByNoticeId(notice);
         double totalPage = Math.ceil(totalCount/paging.getRowSize());
         double nowPageD = paging.getNowPage();
         double pageSizeD = paging.getPageSize();

@@ -100,12 +100,15 @@
                 while (replyListDiv.firstChild) {
                     replyListDiv.removeChild(replyListDiv.firstChild);
                 }
-                document.getElementById("totalCount").value = data.paging.totalCount;
-                document.getElementById("totalPage").value = data.paging.totalPage;
-                document.getElementById("firstPage").value = data.paging.firstPage;
-                document.getElementById("lastPage").value = data.paging.lastPage;
-                document.getElementById("nowPage").value = data.paging.nowPage;
-                document.getElementById("rowSize").value = data.paging.rowSize;
+                while (pageBox.firstChild){
+                    pageBox.removeChild(pageBox.firstChild);
+                }
+                document.getElementById("totalCount").setAttribute("value", data.paging.totalCount);
+                document.getElementById("totalPage").setAttribute("value",data.paging.totalPage);
+                document.getElementById("firstPage").setAttribute("value" ,data.paging.firstPage);
+                document.getElementById("lastPage").setAttribute("value",data.paging.lastPage);
+                document.getElementById("nowPage").setAttribute("value",data.paging.nowPage);
+                document.getElementById("rowSize").setAttribute("value" , data.paging.rowSize);
                 for(let i =0 ; i<replyList.length;i++){
                     let replyDiv = document.createElement("div");
                     let replyId = "reply"+replyList[i].id;
@@ -117,6 +120,46 @@
                     replyDiv.setAttribute("id",replyId);
                     replyDiv.textContent = reply;
                     replyListDiv.append(replyDiv);
+                }
+                let firstPage = data.paging.firstPage;
+                let lastPage = data.paging.lastPage;
+                let totalPage = data.paging.totalPage;
+                console.log(totalPage);
+                if(firstPage != lastPage) {
+                    for (let i = firstPage; i <= lastPage; i++) {
+                        let aTag = document.createElement("a");
+                        let numberBox = document.createElement("li");
+                        let number = document.createTextNode(i);
+                        numberBox.appendChild(number);
+                        aTag.appendChild(numberBox);
+                        if (i == nowPage) {
+                            aTag.setAttribute("style", "text-decoration:underline;")
+                        }
+                        aTag.setAttribute("href", "javascript:replyListMaker("+i+","+rowSize+")");
+                        pageBox.appendChild(aTag);
+                    }
+                }
+                if(totalPage>lastPage){
+                    let nextATag = document.createElement("a");
+                    let nextLiTag = document.createElement("li");
+                    let nextText = document.createTextNode("next");
+                    nextLiTag.appendChild(nextText);
+                    nextATag.appendChild(nextLiTag);
+
+                    let nextFirstPage = parseInt(firstPage)+10>parseInt(totalPage)?parseInt(totalPage):parseInt(firstPage)+10;
+                    nextATag.setAttribute("href", "javascript:replyListMaker("+nextFirstPage+","+rowSize+")");
+                    pageBox.appendChild(nextATag);
+                }
+
+                if(firstPage>1){
+                    let previousATag = document.createElement("a");
+                    let previousLiTag = document.createElement("li");
+                    let previousText = document.createTextNode("previous");
+                    previousLiTag.appendChild(previousText);
+                    previousATag.appendChild(previousLiTag);
+                    let previousFirstPage = parseInt(firstPage)-10>0?parseInt(firstPage)-10:1;
+                    previousATag.setAttribute("href", "javascript:replyListMaker("+previousFirstPage+","+rowSize+")");
+                    pageBox.prepend(previousATag);
                 }
             },
             error: function(xhr, error, msg) {

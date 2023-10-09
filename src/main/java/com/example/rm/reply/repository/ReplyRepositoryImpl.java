@@ -25,7 +25,7 @@ public class ReplyRepositoryImpl implements ReplyRepositoryCustom {
     }
 
     @Override
-    public int getTotalCountByNoticeId(Notice notice) {
+    public double getTotalCountByNoticeId(Notice notice) {
         return Math.toIntExact(queryFactory
                 .selectFrom(qReply)
                 .where(qReply.notice.eq(notice))

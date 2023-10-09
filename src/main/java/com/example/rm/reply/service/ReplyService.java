@@ -28,7 +28,7 @@ public class ReplyService {
         return resultList;
     }
 
-    public int getTotalCountByNoticeId(Notice notice){
+    public double getTotalCountByNoticeId(Notice notice){
         return replyRepositoryCustom.getTotalCountByNoticeId(notice);
     }
 
