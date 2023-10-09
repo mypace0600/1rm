@@ -116,15 +116,25 @@
                     let replyWriter = replyList[i].member.username;
                     let replyTime = replyList[i].createdDate;
                     let replyLikeCount = replyList[i].likeCount;
-                    let reply = replyText + " " + replyWriter + " " + replyTime + " " + replyLikeCount;
+                    let replySpan = document.createElement("span");
+                    let reply = "내용: "+replyText + " 작성자: " + replyWriter + " 시간: " + replyTime + " 좋아요: " + replyLikeCount;
+                    replySpan.textContent = reply;
+                    let deleteBtn = document.createElement("button");
+                    let deleteBtnText = "삭제";
+                    deleteBtn.textContent = deleteBtnText;
+                    deleteBtn.setAttribute("type","button");
+                    deleteBtn.setAttribute("class","replyButton");
+                    deleteBtn.setAttribute("onclick","replyDelete("+replyList[i].id+")");
+                    let deleteBtnId = "reply"+i;
+                    deleteBtn.setAttribute("id",deleteBtnId);
                     replyDiv.setAttribute("id",replyId);
-                    replyDiv.textContent = reply;
+                    replyDiv.append(replySpan);
+                    replyDiv.append(deleteBtn);
                     replyListDiv.append(replyDiv);
                 }
                 let firstPage = data.paging.firstPage;
                 let lastPage = data.paging.lastPage;
                 let totalPage = data.paging.totalPage;
-                console.log(totalPage);
                 if(firstPage != lastPage) {
                     for (let i = firstPage; i <= lastPage; i++) {
                         let aTag = document.createElement("a");
@@ -174,7 +184,6 @@
     deleteBtn.addEventListener("click",()=>{
         const targetId = document.getElementById("noticeId").value;
         const url = "/admin/notice/"+targetId;
-        console.log("url : "+url);
 
         $.ajax({
             type: "delete",
@@ -192,7 +201,6 @@
 
     function noticeUpdate(data,targetId){
         const url = '/admin/notice/'+targetId;
-        console.log("id : "+targetId);
         $.ajax({
             type: "put",
             url: url,
@@ -248,7 +256,6 @@
             isImportant:isImportant,
             isPopup:isPopup
         };
-        console.log(data)
         if(null != targetId && '' != targetId){
             noticeUpdate(data,targetId);
         } else {
@@ -256,61 +263,6 @@
         }
     });
 
-    let firstPage = document.getElementById("firstPage").value;
-    let lastPage = document.getElementById("lastPage").value;
-    let pageSize = document.getElementById("pageSize").value;
-    let pageBox = document.getElementById("pageBox");
-    let nowPage = document.getElementById("nowPage").value;
-    let totalPage = document.getElementById("totalPage").value;
-    let rowSize = document.getElementById("rowSize").value;
-    let noticeId= document.getElementById("noticeId").value;
-    if(firstPage != lastPage) {
-        for (let i = firstPage; i <= lastPage; i++) {
-            let aTag = document.createElement("a");
-            let numberBox = document.createElement("li");
-            let number = document.createTextNode(i);
-            numberBox.appendChild(number);
-            aTag.appendChild(numberBox);
-            if (i == nowPage) {
-                aTag.setAttribute("style", "text-decoration:underline;")
-            }
-            aTag.setAttribute("href", "javascript:replyListMaker("+i+","+rowSize+")");
-            pageBox.appendChild(aTag);
-        }
-    }
-    document.addEventListener("DOMContentLoaded",function(){
-        if(parseInt(totalPage)>parseInt(lastPage)){
-            let nextATag = document.createElement("a");
-            let nextLiTag = document.createElement("li");
-            let nextText = document.createTextNode("next");
-            nextLiTag.appendChild(nextText);
-            nextATag.appendChild(nextLiTag);
-
-            let nextFirstPage = parseInt(firstPage)+10>parseInt(totalPage)?parseInt(totalPage):parseInt(firstPage)+10;
-            nextATag.setAttribute("href", "javascript:replyListMaker("+nextFirstPage+","+rowSize+")");
-            pageBox.appendChild(nextATag);
-        }
-
-        if(parseInt(firstPage)>1){
-            let previousATag = document.createElement("a");
-            let previousLiTag = document.createElement("li");
-            let previousText = document.createTextNode("previous");
-            previousLiTag.appendChild(previousText);
-            previousATag.appendChild(previousLiTag);
-            let previousFirstPage = parseInt(firstPage)-10>0?parseInt(firstPage)-10:1;
-            previousATag.setAttribute("href", "javascript:replyListMaker("+previousFirstPage+","+rowSize+")");
-            pageBox.prepend(previousATag);
-        }
-    })
-
-    const replyButtons = document.getElementsByClassName("replyButton");
-    for(let i=0;i<replyButtons.length;i++){
-        replyButtons[i].addEventListener("click",function(e){
-            let targetId = e.target.id;
-            let replyId = parseInt(targetId.toString().replace("reply",""));
-            replyDelete(replyId)
-        })
-    }
 
     function replyDelete(replyId){
         console.log(replyId);
