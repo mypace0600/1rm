@@ -3,8 +3,10 @@ package com.example.rm.common;
 import com.example.rm.entity.Box;
 import com.example.rm.entity.Machine;
 import com.example.rm.entity.Member;
+import com.example.rm.entity.Notice;
 import com.example.rm.machine.service.MachineService;
 import com.example.rm.member.service.MemberService;
+import com.example.rm.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ public class IndexApiController {
 
     private final MemberService memberService;
     private final MachineService machineService;
+    private final NoticeService noticeService;
 
     @RequestMapping(
             value = "/",
@@ -39,6 +42,8 @@ public class IndexApiController {
         result.put("machineList",machineList);
         int machineCount = (int) machineService.getTotalCount();
         result.put("machineCount",machineCount);
+        List<Notice> popupNoticeList = noticeService.findAllPopupNotice(pageRequest);
+        result.put("popupNoticeList",popupNoticeList);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

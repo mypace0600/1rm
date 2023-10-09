@@ -2,6 +2,7 @@ package com.example.rm.notice.service;
 
 import com.example.rm.entity.Notice;
 import com.example.rm.notice.repository.NoticeRepository;
+import com.example.rm.notice.repository.NoticeRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,7 @@ import java.util.List;
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final NoticeRepositoryCustom noticeRepositoryCustom;
 
     public List<Notice> findAll(PageRequest pageRequest){
         List<Notice> resultList = new ArrayList<>();
@@ -43,5 +45,9 @@ public class NoticeService {
 
     public void update(Notice notice){
         noticeRepository.save(notice);
+    }
+
+    public List<Notice> findAllPopupNotice(PageRequest pageRequest){
+        return noticeRepositoryCustom.findAllPopupNotice(pageRequest);
     }
 }
