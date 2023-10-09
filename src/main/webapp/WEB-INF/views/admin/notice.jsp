@@ -29,7 +29,7 @@
 <main class="main">
     <div class="main-content">
         <div class="search-box">
-            <div class="search-box-title">공제검색</div>
+            <div class="search-box-title">공지검색</div>
             <div class="search-box-detail">
                 <select>
                     <option value="ALL">전체</option>
@@ -45,7 +45,7 @@
         <div class="user-list-table">
             <div class="table-meta">
                 <div class="table-meta-title">
-                    기록목록
+                    공지목록
                 </div>
                 <div class="table-meta-paging">
                     <span>총 ${paging.totalCount}건</span>
