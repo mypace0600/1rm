@@ -46,34 +46,19 @@
         </div>
         <div>
             <div>댓글 목록</div>
-            <c:choose>
-                <c:when test="${fn:length(replyList)==0}">
-                    <div>댓글이 없습니다.</div>
-                </c:when>
-                <c:otherwise>
-                    <c:forEach var="item" items="${replyList}" varStatus="status">
-                        <div>
-                            <span>${item.textContent}</span>
-                            <span>${item.member.username}</span>
-                            <span>${item.likeCount}</span>
-                            <span>${item.createdDate}</span>
-                            <button class="replyButton" id="reply${item.id}" type="button">X</button>
-                        </div>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
+            <div id="replyList"></div>
         </div>
         <!-- paging -->
         <nav id="pageContainer">
             <ul id="pageBox"></ul>
-            <input type="hidden" id="totalCount" value="${paging.totalCount}"/>
-            <input type="hidden" id="pageSize" value="${paging.pageSize}"/>
-            <input type="hidden" id="rowSize" value="${paging.rowSize}"/>
-            <input type="hidden" id="totalPage" value="${paging.totalPage}"/>
-            <input type="hidden" id="pageGroup" value="${paging.pageGroup}"/>
-            <input type="hidden" id="firstPage" value="${paging.firstPage}"/>
-            <input type="hidden" id="lastPage" value="${paging.lastPage}"/>
-            <input type="hidden" id="nowPage" value="${paging.nowPage}"/>
+            <input type="hidden" id="totalCount"/>
+            <input type="hidden" id="pageSize"/>
+            <input type="hidden" id="rowSize" />
+            <input type="hidden" id="totalPage" />
+            <input type="hidden" id="pageGroup" />
+            <input type="hidden" id="firstPage" />
+            <input type="hidden" id="lastPage" />
+            <input type="hidden" id="nowPage" />
         </nav>
     </div>
     <div>
@@ -91,8 +76,56 @@
     $(document).ready(function() {
         $('#textContent').summernote({
         });
-
+        replyListMaker();
     });
+
+    function replyListMaker(nowPage, rowSize){
+        let replyListDiv = document.getElementById("replyList");
+        let noticeId = document.getElementById("noticeId").value;
+        if(nowPage == null){
+            nowPage = "1";
+        }
+        if(rowSize == null){
+            rowSize = "10";
+        }
+        let box = {};
+        box.nowPage = nowPage;
+        box.rowSize = rowSize;
+        $.ajax({
+            type: "GET",
+            data: box,
+            url: "/admin/notice/"+noticeId+"/reply",
+            success: function(data) {
+                let replyList = data.replyList;
+                while (replyListDiv.firstChild) {
+                    replyListDiv.removeChild(replyListDiv.firstChild);
+                }
+                document.getElementById("totalCount").value = data.paging.totalCount;
+                document.getElementById("totalPage").value = data.paging.totalPage;
+                document.getElementById("firstPage").value = data.paging.firstPage;
+                document.getElementById("lastPage").value = data.paging.lastPage;
+                document.getElementById("nowPage").value = data.paging.nowPage;
+                document.getElementById("rowSize").value = data.paging.rowSize;
+                for(let i =0 ; i<replyList.length;i++){
+                    let replyDiv = document.createElement("div");
+                    let replyId = "reply"+replyList[i].id;
+                    let replyText = replyList[i].textContent;
+                    let replyWriter = replyList[i].member.username;
+                    let replyTime = replyList[i].createdDate;
+                    let replyLikeCount = replyList[i].likeCount;
+                    let reply = replyText + " " + replyWriter + " " + replyTime + " " + replyLikeCount;
+                    replyDiv.setAttribute("id",replyId);
+                    replyDiv.textContent = reply;
+                    replyListDiv.append(replyDiv);
+                }
+            },
+            error: function(xhr, error, msg) {
+                console.log(error);
+                console.log(msg);
+            }
+        })
+
+    }
 
     const deleteBtn = document.getElementById("deleteBtn");
     deleteBtn.addEventListener("click",()=>{
@@ -198,7 +231,7 @@
             if (i == nowPage) {
                 aTag.setAttribute("style", "text-decoration:underline;")
             }
-            aTag.setAttribute("href", "/admin/notice/"+noticeId+"?nowPage=" + i + "&rowSize=" + rowSize);
+            aTag.setAttribute("href", "javascript:replyListMaker("+i+","+rowSize+")");
             pageBox.appendChild(aTag);
         }
     }
@@ -211,7 +244,7 @@
             nextATag.appendChild(nextLiTag);
 
             let nextFirstPage = parseInt(firstPage)+10>parseInt(totalPage)?parseInt(totalPage):parseInt(firstPage)+10;
-            nextATag.setAttribute("href","/admin/notice/"+noticeId+"?nowPage="+nextFirstPage.toString()+"&rowSize="+rowSize);
+            nextATag.setAttribute("href", "javascript:replyListMaker("+nextFirstPage+","+rowSize+")");
             pageBox.appendChild(nextATag);
         }
 
@@ -222,7 +255,7 @@
             previousLiTag.appendChild(previousText);
             previousATag.appendChild(previousLiTag);
             let previousFirstPage = parseInt(firstPage)-10>0?parseInt(firstPage)-10:1;
-            previousATag.setAttribute("href","/admin/notice/"+noticeId+"?nowPage="+previousFirstPage.toString()+"&rowSize="+rowSize);
+            previousATag.setAttribute("href", "javascript:replyListMaker("+previousFirstPage+","+rowSize+")");
             pageBox.prepend(previousATag);
         }
     })
@@ -243,7 +276,7 @@
             url: "/admin/reply/"+replyId,
             success: function(data) {
                 alert("성공");
-                location.href="/admin/notice/"+noticeId;
+                replyListMaker();
             },
             error: function(xhr, error, msg) {
                 console.log(error);

@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface ReplyRepositoryCustom {
     List<Reply> findAllByNoticeId(PageRequest pageRequest, Notice notice);
-
+    int getTotalCountByNoticeId(Notice notice);
 }

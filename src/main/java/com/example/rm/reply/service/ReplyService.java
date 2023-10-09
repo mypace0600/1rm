@@ -28,8 +28,8 @@ public class ReplyService {
         return resultList;
     }
 
-    public double getTotalCount(){
-        return replyRepository.count();
+    public int getTotalCountByNoticeId(Notice notice){
+        return replyRepositoryCustom.getTotalCountByNoticeId(notice);
     }
 
     public void save(Reply reply){

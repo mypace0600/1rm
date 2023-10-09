@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
 public class AdminReplyApiController {
 
     private final ReplyService replyService;
-    private final NoticeService noticeService;
-    private final MemberService memberService;
+
+
 
     @RequestMapping(
             value = "/admin/reply",

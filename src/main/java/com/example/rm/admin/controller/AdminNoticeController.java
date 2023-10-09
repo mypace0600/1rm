@@ -1,9 +1,6 @@
 package com.example.rm.admin.controller;
 
-import com.example.rm.entity.Member;
-import com.example.rm.entity.Notice;
-import com.example.rm.entity.Paging;
-import com.example.rm.entity.Reply;
+import com.example.rm.entity.*;
 import com.example.rm.member.service.MemberService;
 import com.example.rm.notice.service.NoticeService;
 import com.example.rm.reply.repository.ReplyRepository;
@@ -11,6 +8,7 @@ import com.example.rm.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -96,7 +95,7 @@ public class AdminNoticeController {
         model.addAttribute("principal",member);
         List<Reply> replyList = replyService.findAllByNoticeId(pageRequest,notice);
         model.addAttribute("replyList",replyList);
-        double totalCount = replyService.getTotalCount();
+        int totalCount = replyService.getTotalCountByNoticeId(notice);
         pagination(model, totalCount, paging);
         model.addAttribute("paging",paging);
         return "admin/notice-detail";
@@ -112,4 +111,42 @@ public class AdminNoticeController {
         model.addAttribute("principal",member);
         return "admin/notice-detail";
     }
+
+    @RequestMapping(
+            value="/admin/notice/{id}/reply",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Box> replyList(
+            @PathVariable String id,
+            @RequestParam(value="nowPage", required = false) String nowPage,
+            @RequestParam(value="rowSize",required = false) String rowSize
+    ){
+        Box result = new Box();
+        Paging paging = new Paging();
+        if(null != nowPage){
+            paging.setNowPage(Integer.valueOf(nowPage));
+        }
+        if(null != rowSize){
+            paging.setRowSize(Integer.valueOf(rowSize));
+        }
+
+        Notice notice = noticeService.findById(Long.valueOf(id));
+        PageRequest pageRequest = PageRequest.of(Integer.parseInt(nowPage)-1, Integer.parseInt(rowSize));
+        List<Reply> replyList = replyService.findAllByNoticeId(pageRequest,notice);
+        int totalCount = replyService.getTotalCountByNoticeId(notice);
+        double totalPage = Math.ceil(totalCount/paging.getRowSize());
+        double nowPageD = paging.getNowPage();
+        double pageSizeD = paging.getPageSize();
+        double pageGroup = Math.ceil(nowPageD/pageSizeD);
+        double lastPage = pageGroup * paging.getPageSize() > totalPage ? totalPage : pageGroup * paging.getPageSize();
+        double firstPage = (pageGroup-1)*paging.getPageSize()+1;
+        paging.setTotalCount((int) totalCount);
+        paging.setTotalPage((int) totalPage);
+        paging.setFirstPage((int) firstPage);
+        paging.setLastPage((int) lastPage);
+        result.put("replyList",replyList);
+        result.put("paging",paging);
+        return ResponseEntity.ok(result);
+    }
+
 }

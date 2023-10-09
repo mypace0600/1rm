@@ -23,4 +23,12 @@ public class ReplyRepositoryImpl implements ReplyRepositoryCustom {
                 .limit(pageRequest.getPageSize())
                 .fetch();
     }
+
+    @Override
+    public int getTotalCountByNoticeId(Notice notice) {
+        return Math.toIntExact(queryFactory
+                .selectFrom(qReply)
+                .where(qReply.notice.eq(notice))
+                .stream().count());
+    }
 }
