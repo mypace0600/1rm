@@ -24,4 +24,8 @@ public class RecordService {
         return resultList;
     }
     public double getTotalCount(){ return recordRepository.count();}
+
+    public void save(Record record){
+        recordRepository.save(record);
+    }
 }

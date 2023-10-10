@@ -17,12 +17,15 @@ public class Record {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "machine_id")
+    @JoinColumn(name = "machine")
     private Machine machine;
+
+    @Column
+    private long machineId;
 
     @CreationTimestamp
     private Timestamp recordDate;
