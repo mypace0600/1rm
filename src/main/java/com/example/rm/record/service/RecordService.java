@@ -1,5 +1,6 @@
 package com.example.rm.record.service;
 
+import com.example.rm.entity.Member;
 import com.example.rm.entity.Record;
 import com.example.rm.record.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,13 @@ public class RecordService {
 
     public void save(Record record){
         recordRepository.save(record);
+    }
+
+    public List<Record> findAllByMember(Member member, PageRequest pageRequest){
+        List<Record> resultList = new ArrayList<>();
+        for(Record item:recordRepository.findAllByMember(member,pageRequest)){
+            resultList.add(item);
+        }
+        return resultList;
     }
 }

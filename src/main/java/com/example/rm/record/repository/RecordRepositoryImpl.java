@@ -6,6 +6,8 @@ import com.example.rm.entity.QRecord;
 import com.example.rm.entity.Record;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -17,10 +19,12 @@ public class RecordRepositoryImpl implements RecordRepositoryCustom{
     QRecord qRecord = QRecord.record;
 
     @Override
-    public List<Record> findAllByMember(Member member) {
-        return queryFactory
+    public Page<Record> findAllByMember(Member member, PageRequest pageRequest) {
+        return (Page<Record>) queryFactory
                 .selectFrom(qRecord)
                 .where(qRecord.member.eq(member))
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize())
                 .fetch();
     }
 

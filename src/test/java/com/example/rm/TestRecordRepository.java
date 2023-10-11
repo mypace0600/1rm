@@ -101,7 +101,8 @@ class TestRecordRepository {
 	@Test
 	public void A004_Record_특정유저의_전체기록_조회(){
 		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
-		List<Record> recordList = recordRepository.findAllByMember(member);
+		PageRequest pageRequest = PageRequest.of(0,10);
+		Page<Record> recordList = recordRepository.findAllByMember(member,pageRequest);
 		if(recordList.isEmpty()){
 			log.error("@@@@@@@@@@@@@@@@ not found");
 		} else {
@@ -113,7 +114,8 @@ class TestRecordRepository {
 	public void A005_Record_특정유저의_전체기록_삭제(){
 		Member member = memberRepository.findById(2L).orElseThrow(()-> new IllegalArgumentException("Member not found"));
 		recordRepository.deleteAllByMember(member);
-		List<Record> recordList = recordRepository.findAllByMember(member);
+		PageRequest pageRequest = PageRequest.of(0,10);
+		Page<Record> recordList = recordRepository.findAllByMember(member,pageRequest);
 		if(recordList.isEmpty()){
 			log.info("@@@@@@@@@@@@@@@@ okay done");
 		} else {
